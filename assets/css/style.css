@@ -1882,18 +1882,5 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 
-.page {
-  display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically if needed */
-  min-height: 100vh; /* Full height to center it properly */
-  margin: 0 auto; /* Ensures centering */
-}
-
-
-.skills, .resume, .portfolio, .contact{
-  padding: 22px;
-  height: 95vh;
-}
 
 
