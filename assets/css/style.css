@@ -1825,7 +1825,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar {
     position: sticky;
-    top: 60px;
+    
     max-height: max-content;
     height: 100%;
     margin-bottom: 0;
@@ -1880,3 +1880,20 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+
+
+.page {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically if needed */
+  min-height: 100vh; /* Full height to center it properly */
+  margin: 0 auto; /* Ensures centering */
+}
+
+
+.skills, .resume, .portfolio, .contact{
+  padding: 22px;
+  height: 95vh;
+}
+
+
