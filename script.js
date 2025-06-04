@@ -443,14 +443,7 @@ class MouseTrail {
 document.addEventListener('DOMContentLoaded', () => {
     new PortfolioExperience();
     new MouseTrail();
-    
-    // Add some glitch effects to titles
-    const titles = document.querySelectorAll('.hero-title, .section-title');
-    titles.forEach(title => {
-        title.addEventListener('mouseenter', () => {
-            TextAnimations.glitchEffect(title);
-        });
-    });
+        
 });
 
 // Performance optimization
