@@ -7,6 +7,7 @@ class PortfolioExperience {
     init() {
         this.setupLoading();
         this.setupCursor();
+        this.setupProjectAnimations();
         this.setupScrollAnimations();
         this.setupFormAnimations();
         this.setupStatsCounter();
@@ -134,24 +135,7 @@ class PortfolioExperience {
             
             observer.observe(project);
 
-            // Parallax effect on scroll
-            window.addEventListener('scroll', () => {
-                const rect = project.getBoundingClientRect();
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.1;
-                
-                if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-                    const visual = project.querySelector('.project-visual');
-                    visual.style.transform = `translateY(${rate}px)`;
-                }
-            });
-
-            // Color change effect
-            const bgColor = project.getAttribute('data-bg');
-            project.addEventListener('mouseenter', () => {
-                document.body.style.setProperty('--accent-hover', bgColor);
-                project.style.setProperty('--hover-color', bgColor);
-            });
+            
         });
     }
 
