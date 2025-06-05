@@ -8,7 +8,6 @@ class PortfolioExperience {
         this.setupLoading();
         this.setupCursor();
         this.setupScrollAnimations();
-        this.setupProjectAnimations();
         this.setupFormAnimations();
         this.setupStatsCounter();
         this.setupParallax();
