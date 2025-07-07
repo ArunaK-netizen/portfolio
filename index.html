@@ -3,655 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio OS - Ultimate Edition</title>
+    <title>ARUNA KUMAR — COMPUTER SCIENCE</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+        /* ==============================================
+           NOTHING.TECH INSPIRED PORTFOLIO
+           Clean, Intelligent, Deeply Intentional
+        ============================================== */
+        
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
         
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --accent-blue: #58a6ff;
-            --accent-purple: #bc8cff;
-            --accent-green: #7ce38b;
-            --accent-orange: #ffa657;
-            --accent-red: #ff7b72;
-            --accent-pink: #ff6b9d;
-            --accent-cyan: #79c0ff;
-            --shadow-light: rgba(255, 255, 255, 0.1);
-            --shadow-dark: rgba(0, 0, 0, 0.5);
-            --border-radius: 12px;
-            --border-radius-lg: 16px;
-            --wallpaper-primary: #1a1d29;
-            --wallpaper-secondary: #252936;
+            /* Nothing.tech Color System */
+            --black: #000000;
+            --white: #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-200: #e0e0e0;
+            --gray-300: #cccccc;
+            --gray-400: #999999;
+            --gray-500: #666666;
+            --gray-600: #333333;
+            --gray-700: #1a1a1a;
+            --accent: #ff3333; /* Glitch Red */
+            
+            /* Typography */
+            --font-primary: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            /* Spacing System */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            --space-xxl: 16rem;
+            
+            /* Layout */
+            --max-width: 1400px;
+            --grid-gap: 2rem;
+            
+            /* Animation */
+            --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
+        
+        /* ==============================================
+           RESET & BASE STYLES
+        ============================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow: hidden;
-            height: 100vh;
-            user-select: none;
+        
+        *::selection {
+            background: var(--accent);
+            color: var(--white);
         }
-
-        /* Dynamic Wallpaper System */
-        .wallpaper-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -10;
-            overflow: hidden;
-        }
-
-        .wallpaper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-
-        .wallpaper.active {
-            opacity: 1;
-        }
-
-        /* Neural Network Wallpaper */
-        .wallpaper-neural {
-            background: linear-gradient(135deg, 
-                #0d1117 0%, 
-                #1a1d29 30%, 
-                #252936 60%, 
-                #161b22 100%);
-        }
-
-        /* Geometric Wallpaper */
-        .wallpaper-geometric {
-            background: 
-                linear-gradient(135deg, var(--bg-primary) 0%, var(--wallpaper-primary) 50%, var(--wallpaper-secondary) 100%),
-                radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(188, 140, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(124, 227, 139, 0.1) 0%, transparent 50%);
-        }
-
-        /* Matrix Wallpaper */
-        .wallpaper-matrix {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        }
-
-        /* Animated Canvas Wallpapers */
-        .wallpaper-canvas {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Desktop */
-        .desktop {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Enhanced Particles */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: float 20s infinite linear;
-        }
-
-        .particle.blue {
-            background: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue);
-        }
-
-        .particle.purple {
-            background: var(--accent-purple);
-            box-shadow: 0 0 10px var(--accent-purple);
-        }
-
-        .particle.green {
-            background: var(--accent-green);
-            box-shadow: 0 0 10px var(--accent-green);
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) translateX(0px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.4;
-            }
-            90% {
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Enhanced Menu Bar */
-        .menu-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 32px;
-            background: rgba(22, 27, 34, 0.95);
-            backdrop-filter: blur(30px);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1000;
-            font-size: 13px;
-        }
-
-        .menu-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .menu-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .menu-item {
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-
-        /* System Status Indicators */
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: rgba(124, 227, 139, 0.1);
-            border: 1px solid rgba(124, 227, 139, 0.3);
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-green);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Enhanced Dock */
-        .dock {
-            position: fixed;
-            bottom: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius-lg);
-            padding: 12px;
-            display: flex;
-            gap: 8px;
-            z-index: 900;
-            box-shadow: 
-                0 8px 32px var(--shadow-dark),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .dock-item {
-            width: 52px;
-            height: 52px;
-            border-radius: var(--border-radius);
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dock-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .dock-item::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--accent-blue);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .dock-item:hover {
-            transform: scale(1.3) translateY(-12px);
-            box-shadow: 0 12px 32px rgba(88, 166, 255, 0.4);
-        }
-
-        .dock-item:hover::before {
-            opacity: 0.15;
-        }
-
-        .dock-item.active::after {
-            opacity: 1;
-        }
-
-        .dock-item i {
-            font-size: 22px;
-            z-index: 1;
-        }
-
-        /* Enhanced Window System */
-        .window {
-            position: absolute;
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius-lg);
-            box-shadow: 
-                0 20px 80px var(--shadow-dark),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            min-width: 450px;
-            min-height: 350px;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            resize: both;
-            z-index: 100;
-        }
-
-        .window.active {
-            display: flex;
-            z-index: 200;
-        }
-
-        .window.maximized {
-            top: 32px !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: calc(100vh - 32px) !important;
-            border-radius: 0;
-        }
-
-        .window.minimized {
-            transform: scale(0.1) translateY(500px);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Enhanced Window Header */
-        .window-header {
-            height: 44px;
-            background: rgba(255, 255, 255, 0.08);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            cursor: move;
-            backdrop-filter: blur(20px);
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .window-control {
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .window-control::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .window-control.close {
-            background: linear-gradient(135deg, #ff5f57, #ff3b30);
-        }
-
-        .window-control.close::before {
-            background: #8b0000;
-        }
-
-        .window-control.minimize {
-            background: linear-gradient(135deg, #ffbd2e, #ff9500);
-        }
-
-        .window-control.minimize::before {
-            background: #8b4500;
-        }
-
-        .window-control.maximize {
-            background: linear-gradient(135deg, #28ca42, #30d158);
-        }
-
-        .window-control.maximize::before {
-            background: #006400;
-        }
-
-        .window-control:hover {
-            transform: scale(1.1);
-        }
-
-        .window-control:hover::before {
-            opacity: 1;
-        }
-
-        .window-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-
-        .window-tabs {
-            display: flex;
-            gap: 6px;
-        }
-
-        .window-tab {
-            padding: 6px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .window-tab:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--glass-border);
-        }
-
-        .window-tab.active {
-            background: var(--accent-blue);
-            color: var(--bg-primary);
-            border-color: var(--accent-blue);
-        }
-
-        /* Enhanced Window Content */
-        .window-content {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-blue) transparent;
-        }
-
-        .window-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .window-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .window-content::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
-            border-radius: 4px;
-        }
-
-        /* Enhanced Command Launcher */
-        .command-launcher {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius-lg);
-            width: 600px;
-            max-height: 500px;
-            box-shadow: 
-                0 20px 80px var(--shadow-dark),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            display: none;
-            flex-direction: column;
-            z-index: 1500;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .command-launcher.active {
-            display: flex;
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .command-input {
-            background: transparent;
-            border: none;
-            padding: 24px;
-            font-size: 18px;
-            color: var(--text-primary);
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .command-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .command-results {
-            border-top: 1px solid var(--glass-border);
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .command-result {
-            padding: 16px 24px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            border-left: 3px solid transparent;
-        }
-
-        .command-result:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-left-color: var(--accent-blue);
-        }
-
-        .command-result i {
-            width: 24px;
-            color: var(--accent-blue);
+        
+        html {
+            scroll-behavior: smooth;
             font-size: 16px;
         }
-
-        .command-result-content {
-            flex: 1;
+        
+        body {
+            font-family: var(--font-primary);
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.4;
+            overflow-x: hidden;
+            cursor: none;
         }
-
-        .command-result-title {
-            font-weight: 500;
-            margin-bottom: 2px;
+        
+        /* ==============================================
+           CUSTOM CURSOR
+        ============================================== */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--black);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
         }
-
-        .command-result-subtitle {
-            font-size: 12px;
-            color: var(--text-secondary);
+        
+        .cursor.hover {
+            transform: scale(3);
+            background: var(--accent);
+            mix-blend-mode: normal;
         }
-
-        /* Desktop Widgets */
-        .widget {
-            position: absolute;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
-            padding: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-        }
-
-        .widget:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Weather Widget */
-        .weather-widget {
-            top: 60px;
-            right: 20px;
-            width: 200px;
-            text-align: center;
-        }
-
-        .weather-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        .weather-temp {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .weather-location {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        /* Clock Widget */
-        .clock-widget {
-            top: 60px;
-            left: 20px;
-            width: 160px;
-            text-align: center;
-        }
-
-        .clock-time {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .clock-date {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        /* System Monitor Widget */
-        .system-widget {
-            top: 60px;
-            right: 240px;
-            width: 180px;
-        }
-
-        .system-stat {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 12px;
-        }
-
-        .system-bar {
+        
+        /* ==============================================
+           NAVIGATION
+        ============================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 12px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-200);
         }
-
-        .system-bar-fill {
+        
+        .nav-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
             height: 100%;
-            border-radius: 2px;
-            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-md);
         }
-
-        .cpu-bar { background: var(--accent-blue); }
-        .memory-bar { background: var(--accent-green); }
-        .storage-bar { background: var(--accent-orange); }
-
-        /* Enhanced Project Cards */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 24px;
+        
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            text-decoration: none;
         }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.4s;
+        
+        .nav-menu {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+        
+        .nav-link {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out);
+            position: relative;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--black);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s var(--ease-out);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* ==============================================
+           LAYOUT CONTAINERS
+        ============================================== */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .section-content {
+            width: 100%;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s var(--spring);
+        }
+        
+        .section-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ==============================================
+           HOME SECTION
+        ============================================== */
+        .home {
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .home-title {
+            font-family: var(--font-primary);
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            margin-bottom: var(--space-lg);
+            color: var(--black);
+        }
+        
+        .home-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-500);
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+        }
+        
+        .home-cta {
+            display: inline-block;
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--black);
+            color: var(--white);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out);
             position: relative;
             overflow: hidden;
         }
-
+        
+        .home-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s var(--ease-out);
+            z-index: -1;
+        }
+        
+        .home-cta:hover::before {
+            left: 0;
+        }
+        
+        .home-cta:hover {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        /* ==============================================
+           WORK SECTION
+        ============================================== */
+        .work {
+            padding: var(--space-xxl) 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            margin-bottom: var(--space-md);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--grid-gap);
+            margin-top: var(--space-xl);
+        }
+        
+        .project-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border: 1px solid var(--gray-200);
+            transition: all 0.4s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
         .project-card::before {
             content: '';
             position: absolute;
@@ -659,1663 +311,1018 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(88, 166, 255, 0.1), transparent);
-            transition: left 0.8s;
+            background: linear-gradient(90deg, transparent, rgba(255, 51, 51, 0.1), transparent);
+            transition: left 0.6s var(--ease-out);
         }
-
+        
         .project-card:hover::before {
             left: 100%;
         }
-
+        
         .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px rgba(88, 166, 255, 0.25);
-            border-color: var(--accent-blue);
+            border-color: var(--accent);
+            transform: translateY(-4px);
         }
-
-        .project-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .project-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--border-radius);
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-        }
-
-        .project-title {
-            font-size: 18px;
+        
+        .project-name {
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--black);
+            margin-bottom: var(--space-sm);
         }
-
-        .project-subtitle {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
+        
         .project-description {
-            color: var(--text-secondary);
-            font-size: 14px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-bottom: var(--space-md);
             line-height: 1.6;
-            margin-bottom: 20px;
         }
-
-        .project-tags {
+        
+        .project-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
         }
-
-        .project-tag {
-            background: rgba(88, 166, 255, 0.2);
-            color: var(--accent-blue);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
+        
+        .tech-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
             font-weight: 500;
-            border: 1px solid rgba(88, 166, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-600);
+            background: var(--gray-100);
+            padding: 0.3rem 0.8rem;
         }
-
-        .project-actions {
+        
+        .project-links {
             display: flex;
-            gap: 12px;
+            gap: var(--space-md);
         }
-
-        .project-btn {
-            flex: 1;
-            background: rgba(88, 166, 255, 0.1);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-            text-align: center;
+        
+        .project-link {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
             text-decoration: none;
+            transition: all 0.3s var(--ease-out);
         }
-
-        .project-btn:hover {
-            background: var(--accent-blue);
-            color: white;
+        
+        .project-link:hover {
+            color: var(--black);
         }
-
-        /* Enhanced Calculator */
-        .calculator {
-            background: var(--glass-bg);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            width: 280px;
+        
+        /* ==============================================
+           ABOUT SECTION
+        ============================================== */
+        .about {
+            padding: var(--space-xxl) 0;
+            text-align: center;
+        }
+        
+        .about-content {
+            max-width: 800px;
             margin: 0 auto;
         }
-
-        .calc-display {
-            width: 100%;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 24px;
-            font-family: 'JetBrains Mono', monospace;
-            text-align: right;
-            padding: 0 16px;
-            margin-bottom: 16px;
-            outline: none;
+        
+        .about-image {
+            width: 200px;
+            height: 200px;
+            background: var(--gray-200);
+            margin: 0 auto var(--space-lg);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease-out);
         }
-
-        .calc-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        .calc-btn {
-            height: 50px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .calc-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(0.95);
-        }
-
-        .calc-btn:active {
-            transform: scale(0.9);
-        }
-
-        .calc-btn.operator {
-            background: var(--accent-blue);
-            color: white;
-            border-color: var(--accent-blue);
-        }
-
-        .calc-btn.clear {
-            background: var(--accent-red);
-            color: white;
-            border-color: var(--accent-red);
-        }
-
-        /* Desktop Icons */
-        .desktop-icon {
+        
+        .about-image::before {
+            content: '';
             position: absolute;
-            width: 80px;
-            height: 90px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-radius: var(--border-radius);
-            transition: all 0.3s;
-            padding: 8px;
-            gap: 8px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            opacity: 0;
+            transition: opacity 0.3s var(--ease-out);
         }
-
-        .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
+        
+        .about-image:hover::before {
+            opacity: 0.1;
+        }
+        
+        .about-image:hover {
             transform: scale(1.05);
         }
-
-        .desktop-icon i {
-            font-size: 32px;
-            margin-bottom: 4px;
+        
+        .about-text {
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: var(--space-lg);
         }
-
-        .desktop-icon span {
-            font-size: 11px;
-            text-align: center;
-            color: var(--text-primary);
-            font-weight: 500;
+        
+        .about-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
         }
-
-        /* Music Player Widget */
-        .music-widget {
-            position: absolute;
-            bottom: 100px;
-            right: 20px;
-            width: 250px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
-            padding: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        
+        .about-section {
+            margin-bottom: var(--space-lg);
         }
-
-        .music-info {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .music-title {
+        
+        .about-section h3 {
+            font-family: var(--font-mono);
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            margin-bottom: var(--space-sm);
         }
-
-        .music-artist {
-            font-size: 12px;
-            color: var(--text-secondary);
+        
+        .about-section ul {
+            list-style: none;
+            padding: 0;
         }
-
-        .music-controls {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 16px;
+        
+        .about-section li {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-bottom: var(--space-xs);
+            padding-left: var(--space-sm);
+            position: relative;
         }
-
-        .music-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .about-section li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        /* ==============================================
+           BLOG SECTION
+        ============================================== */
+        .blog {
+            padding: var(--space-xxl) 0;
+            background: var(--gray-100);
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--grid-gap);
+            margin-top: var(--space-xl);
+        }
+        
+        .blog-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            transition: all 0.4s var(--ease-out);
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .music-btn:hover {
-            background: var(--accent-blue);
-            color: white;
-        }
-
-        .music-btn.play {
-            background: var(--accent-blue);
-            color: white;
-        }
-
-        .music-progress {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
+            position: relative;
             overflow: hidden;
         }
-
-        .music-progress-bar {
+        
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            transform: translateX(-100%);
+            transition: transform 0.4s var(--ease-out);
+        }
+        
+        .blog-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-title {
+            font-family: var(--font-primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--black);
+            margin-bottom: var(--space-sm);
+            line-height: 1.3;
+        }
+        
+        .blog-excerpt {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: var(--space-md);
+        }
+        
+        .blog-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+        
+        /* ==============================================
+           CONTACT SECTION
+        ============================================== */
+        .contact {
+            padding: var(--space-xxl) 0;
+        }
+        
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact-form {
+            margin-top: var(--space-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-lg);
+            text-align: left;
+        }
+        
+        .form-label {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            margin-bottom: var(--space-xs);
+            display: block;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--space-sm);
+            border: 1px solid var(--gray-300);
+            background: var(--white);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--black);
+            transition: all 0.3s var(--ease-out);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--gray-100);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
             height: 100%;
-            background: var(--accent-blue);
-            width: 35%;
-            border-radius: 2px;
-            animation: musicProgress 3s infinite;
+            background: var(--accent);
+            transition: left 0.3s var(--ease-out);
+            z-index: -1;
         }
-
-        @keyframes musicProgress {
-            0% { width: 35%; }
-            50% { width: 65%; }
-            100% { width: 35%; }
+        
+        .form-submit:hover::before {
+            left: 0;
         }
-
-        /* Code Editor Styles */
-        .code-editor {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-green);
-            overflow-x: auto;
+        
+        .form-submit:hover {
+            transform: translateY(-2px);
         }
-
-        .code-line {
-            margin-bottom: 8px;
+        
+        .contact-alt {
+            margin-top: var(--space-xl);
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+        }
+        
+        .contact-item {
             display: flex;
             align-items: center;
+            gap: var(--space-sm);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
         }
-
-        .line-number {
-            color: var(--text-secondary);
-            margin-right: 16px;
-            width: 20px;
-            text-align: right;
-            font-size: 12px;
+        
+        .contact-item:hover {
+            transform: translateY(-2px);
         }
-
-        .code-keyword {
-            color: var(--accent-purple);
+        
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 0.8rem;
+            transition: all 0.3s var(--ease-out);
         }
-
-        .code-string {
-            color: var(--accent-orange);
+        
+        .contact-item:hover .contact-icon {
+            background: var(--accent);
         }
-
-        .code-comment {
-            color: var(--text-secondary);
-            font-style: italic;
+        
+        .contact-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
         }
-
-        /* Responsive Design */
+        
+        /* ==============================================
+           FOOTER
+        ============================================== */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: var(--space-lg) 0;
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-400);
+        }
+        
+        /* ==============================================
+           GLITCH EFFECTS
+        ============================================== */
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: var(--accent);
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: var(--gray-300);
+            z-index: -2;
+        }
+        
+        @keyframes glitch-1 {
+            0%, 14%, 15%, 49%, 50%, 99%, 100% {
+                transform: translate(0);
+                opacity: 0;
+            }
+            15%, 49% {
+                transform: translate(-2px, 2px);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes glitch-2 {
+            0%, 20%, 21%, 62%, 63%, 99%, 100% {
+                transform: translate(0);
+                opacity: 0;
+            }
+            21%, 62% {
+                transform: translate(2px, -2px);
+                opacity: 0.8;
+            }
+        }
+        
+        /* ==============================================
+           RESPONSIVE DESIGN
+        ============================================== */
         @media (max-width: 768px) {
-            .dock {
-                bottom: 8px;
-                padding: 8px;
+            .nav-menu {
+                display: none;
             }
             
-            .dock-item {
-                width: 44px;
-                height: 44px;
+            .projects-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
             }
             
-            .window {
-                min-width: 320px;
-                width: 95vw !important;
-                height: 80vh !important;
+            .contact-alt {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .command-launcher {
-                width: 95vw;
-            }
-            
-            .widget {
-                position: relative;
-                margin: 10px;
-                width: calc(100% - 20px);
-            }
-            
-            .weather-widget, .clock-widget, .system-widget {
-                position: relative;
-                top: auto;
-                left: auto;
-                right: auto;
-                width: 100%;
+            .section {
+                padding: var(--space-lg) 0;
             }
         }
-
-        /* Animations */
-        @keyframes windowOpen {
+        
+        /* ==============================================
+           ANIMATIONS
+        ============================================== */
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: scale(0.8) translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: translateY(0);
             }
         }
-
-        .window.opening {
-            animation: windowOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        @keyframes iconBounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        
+        .fade-in {
+            animation: fadeIn 0.8s var(--ease-out) forwards;
         }
-
-        .desktop-icon.clicked {
-            animation: iconBounce 0.3s ease;
+        
+        .slide-up {
+            animation: slideUp 1s var(--spring) forwards;
         }
-
-        /* Matrix Rain Effect */
-        .matrix-rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.1;
+        
+        /* ==============================================
+           UTILITY CLASSES
+        ============================================== */
+        .text-center {
+            text-align: center;
         }
-
-        /* Neural Network Animation */
-        .neural-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.3;
+        
+        .text-left {
+            text-align: left;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .mb-sm {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .mb-md {
+            margin-bottom: var(--space-md);
+        }
+        
+        .mb-lg {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .mt-sm {
+            margin-top: var(--space-sm);
+        }
+        
+        .mt-md {
+            margin-top: var(--space-md);
+        }
+        
+        .mt-lg {
+            margin-top: var(--space-lg);
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Dynamic Wallpaper System -->
-    <div class="wallpaper-container">
-        <div class="wallpaper wallpaper-neural active" id="wallpaper-neural">
-            <canvas class="wallpaper-canvas neural-bg" id="neuralCanvas"></canvas>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">AK</a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#work" class="nav-link">Work</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#blog" class="nav-link">Notes</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
         </div>
-        <div class="wallpaper wallpaper-geometric" id="wallpaper-geometric"></div>
-        <div class="wallpaper wallpaper-matrix" id="wallpaper-matrix">
-            <canvas class="wallpaper-canvas matrix-rain" id="matrixCanvas"></canvas>
-        </div>
-    </div>
-
-    <!-- Enhanced Menu Bar -->
-    <div class="menu-bar">
-        <div class="menu-left">
-            <div class="menu-item">🍎</div>
-            <div class="menu-item">Portfolio OS</div>
-            <div class="menu-item">File</div>
-            <div class="menu-item">Edit</div>
-            <div class="menu-item">View</div>
-            <div class="menu-item">Window</div>
-            <div class="menu-item" onclick="openSettings()">Preferences</div>
-            <div class="menu-item">Help</div>
-        </div>
-        <div class="menu-right">
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span>AI Core Active</span>
-            </div>
-            <div class="menu-item">🔋 98%</div>
-            <div class="menu-item">📶 WiFi</div>
-            <div class="menu-item" id="current-time">12:00 PM</div>
-        </div>
-    </div>
-
-    <!-- Desktop -->
-    <div class="desktop" id="desktop">
-        <!-- Enhanced Desktop Icons -->
-        <div class="desktop-icon" style="top: 80px; left: 40px;" onclick="openWindow('projects')">
-            <i class="fas fa-code" style="color: var(--accent-blue);"></i>[1][4]
-            <span>Projects</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 80px; left: 140px;" onclick="openWindow('research')">
-            <i class="fas fa-brain" style="color: var(--accent-purple);"></i>[2]
-            <span>AI Research</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 180px; left: 40px;" onclick="openWindow('resume')">
-            <i class="fas fa-user-graduate" style="color: var(--accent-green);"></i>
-            <span>Resume</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 180px; left: 140px;" onclick="openWindow('notes')">
-            <i class="fas fa-sticky-note" style="color: var(--accent-orange);"></i>
-            <span>Dev Notes</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 280px; left: 40px;" onclick="openWindow('inbox')">
-            <i class="fas fa-envelope" style="color: var(--accent-red);"></i>
-            <span>Messages</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 280px; left: 140px;" onclick="openWindow('calculator')">
-            <i class="fas fa-calculator" style="color: var(--accent-cyan);"></i>
-            <span>Calculator</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 380px; left: 40px;" onclick="openWindow('terminal')">
-            <i class="fas fa-terminal" style="color: var(--accent-green);"></i>
-            <span>Terminal</span>
-        </div>
-        
-        <div class="desktop-icon" style="top: 380px; left: 140px;" onclick="openWindow('settings')">
-            <i class="fas fa-cog" style="color: var(--text-secondary);"></i>
-            <span>System</span>
-        </div>
-    </div>
-
-    <!-- Desktop Widgets -->
-    <div class="widget clock-widget">
-        <div class="clock-time" id="clock-time">12:00:00</div>
-        <div class="clock-date" id="clock-date">Monday, June 23</div>
-    </div>
-
-    <div class="widget weather-widget">
-        <div class="weather-icon">🌙</div>
-        <div class="weather-temp">22°C</div>
-        <div class="weather-location">San Francisco, CA</div>
-    </div>
-
-    <div class="widget system-widget">
-        <div class="system-stat">
-            <span>CPU</span>
-            <span>45%</span>
-        </div>
-        <div class="system-bar">
-            <div class="system-bar-fill cpu-bar" style="width: 45%;"></div>
-        </div>
-        
-        <div class="system-stat">
-            <span>Memory</span>
-            <span>62%</span>
-        </div>
-        <div class="system-bar">
-            <div class="system-bar-fill memory-bar" style="width: 62%;"></div>
-        </div>
-        
-        <div class="system-stat">
-            <span>Storage</span>
-            <span>78%</span>
-        </div>
-        <div class="system-bar">
-            <div class="system-bar-fill storage-bar" style="width: 78%;"></div>
-        </div>
-    </div>
-
-    <!-- Music Player Widget -->
-    <div class="music-widget">
-        <div class="music-info">
-            <div class="music-title">Coding Vibes</div>
-            <div class="music-artist">Lo-Fi Hip Hop</div>
-        </div>
-        <div class="music-controls">
-            <div class="music-btn"><i class="fas fa-step-backward"></i></div>
-            <div class="music-btn play"><i class="fas fa-pause"></i></div>
-            <div class="music-btn"><i class="fas fa-step-forward"></i></div>
-        </div>
-        <div class="music-progress">
-            <div class="music-progress-bar"></div>
-        </div>
-    </div>
-
-    <!-- Enhanced Projects Window -->
-    <div class="window" id="projects-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('projects')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('projects')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('projects')"></div>
-            </div>
-            <div class="window-title">Projects Portfolio</div>
-            <div class="window-tabs">
-                <div class="window-tab active">All Projects</div>
-                <div class="window-tab">Web Dev</div>
-                <div class="window-tab">AI/ML</div>
-                <div class="window-tab">Mobile</div>
+    </nav>
+    
+    <!-- Home Section -->
+    <section id="home" class="section home">
+        <div class="container">
+            <div class="section-content visible">
+                <h1 class="home-title glitch" data-text="ARUNA KUMAR">ARUNA KUMAR</h1>
+                <div class="home-subtitle">
+                    COMPUTER SCIENCE.<br>
+                    ENGINEERING SYSTEMS.<br>
+                    BUILDING INTELLIGENT THINGS.
+                </div>
+                <a href="#work" class="home-cta">[ VIEW PORTFOLIO ]</a>
             </div>
         </div>
-        <div class="window-content">
-            <h2 style="margin-bottom: 24px; color: var(--text-primary);">Featured Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-cube"></i>
-                        </div>
-                        <div>
-                            <div class="project-title">3D Portfolio Experience</div>[1][4]
-                            <div class="project-subtitle">Interactive Web Interface</div>
-                        </div>
-                    </div>
-                    <div class="project-description">An immersive 3D animated portfolio website featuring interactive neural networks, dynamic visual storytelling, and cutting-edge WebGL effects.</div>
-                    <div class="project-tags">
-                        <span class="project-tag">Three.js</span>
-                        <span class="project-tag">WebGL</span>
-                        <span class="project-tag">GLSL</span>
-                        <span class="project-tag">TypeScript</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="#" class="project-btn">Live Demo</a>
-                        <a href="#" class="project-btn">Source Code</a>
-                    </div>
+    </section>
+    
+    <!-- Work Section -->
+    <section id="work" class="section work">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="section-title">SELECTED WORK</h2>
                 </div>
                 
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));">
-                            <i class="fas fa-brain"></i>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 class="project-name">ConceptAttention Adapter</h3>
+                        <p class="project-description">
+                            Developing an adapter module for ConceptAttention to enhance camouflaged object detection using diffusion-based cross-attention and hierarchical attention fusion.
+                        </p>
+                        <div class="project-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">Computer Vision</span>
+                            <span class="tech-tag">Deep Learning</span>
                         </div>
-                        <div>
-                            <div class="project-title">SAM-Adapter Optimization</div>[2]
-                            <div class="project-subtitle">Model Adaptation Research</div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">GitHub →</a>
+                            <a href="#" class="project-link">Demo →</a>
                         </div>
                     </div>
-                    <div class="project-description">Advanced adapter techniques for fine-tuning deep learning models, focusing on SAM-Adapter for efficient image segmentation tasks.</div>
-                    <div class="project-tags">
-                        <span class="project-tag">PyTorch</span>
-                        <span class="project-tag">SAM-Adapter</span>
-                        <span class="project-tag">Computer Vision</span>
-                        <span class="project-tag">CUDA</span>
+                    
+                    <div class="project-card">
+                        <h3 class="project-name">PaveSense</h3>
+                        <p class="project-description">
+                            Real-time pothole detection using smartphone IMU data with a hybrid CNN-LSTM model for robust mobile-based road condition monitoring.
+                        </p>
+                        <div class="project-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">CNN-LSTM</span>
+                            <span class="tech-tag">Mobile ML</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">GitHub →</a>
+                            <a href="#" class="project-link">Demo →</a>
+                        </div>
                     </div>
-                    <div class="project-actions">
-                        <a href="#" class="project-btn">Research Paper</a>
-                        <a href="#" class="project-btn">Code Repository</a>
+                    
+                    <div class="project-card">
+                        <h3 class="project-name">Faculty Selection System</h3>
+                        <p class="project-description">
+                            Full-stack web application for VIT Chennai's faculty course selection with secure authentication and real-time constraint-based selection logic.
+                        </p>
+                        <div class="project-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">GitHub →</a>
+                            <a href="#" class="project-link">Live →</a>
+                        </div>
                     </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-name">Vehicle Entry System</h3>
+                        <p class="project-description">
+                            Deep learning-based automated vehicle entry system using custom CNN-OCR for license plate recognition and RFID-based access control.
+                        </p>
+                        <div class="project-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OpenCV</span>
+                            <span class="tech-tag">CNN</span>
+                            <span class="tech-tag">OCR</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">GitHub →</a>
+                            <a href="#" class="project-link">Paper →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="section-title">ABOUT</h2>
                 </div>
                 
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));">
-                            <i class="fas fa-image"></i>
+                <div class="about-content">
+                    <div class="about-image"></div>
+                    
+                    <p class="about-text">
+                        I'm Aruna Kumar, a Computer Science student at VIT Chennai with a passion for building intelligent systems that solve real-world problems. Currently pursuing my B.Tech with a CGPA of 9.13, I specialize in deep learning, computer vision, and system architecture.
+                    </p>
+                    
+                    <div class="about-list">
+                        <div class="about-section">
+                            <h3>What I'm Into</h3>
+                            <ul>
+                                <li>Computer Vision & Deep Learning</li>
+                                <li>Neural Architecture Design</li>
+                                <li>System Architecture & Performance</li>
+                                <li>Real-time ML Applications</li>
+                                <li>Distributed Computing</li>
+                            </ul>
                         </div>
-                        <div>
-                            <div class="project-title">T5-Small Image Generation</div>[3]
-                            <div class="project-subtitle">Optimized ML Pipeline</div>
+                        
+                        <div class="about-section">
+                            <h3>Currently Building</h3>
+                            <ul>
+                                <li>ConceptAttention Adapter for Object Detection</li>
+                                <li>Mobile-based Infrastructure Monitoring</li>
+                                <li>Scalable ML Pipeline Architectures</li>
+                                <li>Open Source Computer Vision Tools</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="project-description">Optimization and debugging of image generation models using smaller, efficient architectures like T5-small for practical deployment scenarios.</div>
-                    <div class="project-tags">
-                        <span class="project-tag">T5-Small</span>
-                        <span class="project-tag">Hugging Face</span>
-                        <span class="project-tag">Optimization</span>
-                        <span class="project-tag">Docker</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="#" class="project-btn">Demo</a>
-                        <a href="#" class="project-btn">Documentation</a>
-                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Section -->
+    <section id="blog" class="section blog">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="section-title">NOTES</h2>
                 </div>
                 
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-orange), var(--accent-red));">
-                            <i class="fas fa-desktop"></i>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <h3 class="blog-title">How I Think About Systems</h3>
+                        <p class="blog-excerpt">
+                            Exploring the principles of system design that guide my approach to building scalable, maintainable software architectures.
+                        </p>
+                        <div class="blog-date">Jan 2025</div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <h3 class="blog-title">Notes on Self-Attention</h3>
+                        <p class="blog-excerpt">
+                            Deep dive into attention mechanisms, their mathematical foundations, and practical implications for computer vision tasks.
+                        </p>
+                        <div class="blog-date">Dec 2024</div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <h3 class="blog-title">What Elegance Means in Code</h3>
+                        <p class="blog-excerpt">
+                            Thoughts on writing code that is not just functional, but beautiful, maintainable, and expressive of clear thinking.
+                        </p>
+                        <div class="blog-date">Nov 2024</div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <h3 class="blog-title">Building Intelligent Things</h3>
+                        <p class="blog-excerpt">
+                            Reflections on the intersection of artificial intelligence and practical engineering, and what it means to build systems that think.
+                        </p>
+                        <div class="blog-date">Oct 2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="section-title">CONTACT</h2>
+                </div>
+                
+                <div class="contact-content">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
                         </div>
-                        <div>
-                            <div class="project-title">Portfolio OS</div>
-                            <div class="project-subtitle">Operating System UI</div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-input form-textarea" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="form-submit">Send Message</button>
+                    </form>
+                    
+                    <div class="contact-alt">
+                        <div class="contact-item" data-copy="arundd2004@gmail.com">
+                            <div class="contact-icon">@</div>
+                            <span class="contact-label">Email</span>
+                        </div>
+                        
+                        <div class="contact-item" data-copy="https://linkedin.com/in/arun-dasari">
+                            <div class="contact-icon">in</div>
+                            <span class="contact-label">LinkedIn</span>
+                        </div>
+                        
+                        <div class="contact-item" data-copy="https://github.com/arundd2004">
+                            <div class="contact-icon">gh</div>
+                            <span class="contact-label">GitHub</span>
                         </div>
                     </div>
-                    <div class="project-description">A complete operating system interface recreation with window management, command launcher, and desktop widgets for portfolio presentation.</div>
-                    <div class="project-tags">
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">CSS3</span>
-                        <span class="project-tag">UI/UX</span>
-                        <span class="project-tag">Animations</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="#" class="project-btn">Current Project</a>
-                        <a href="#" class="project-btn">GitHub</a>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Research Window -->
-    <div class="window" id="research-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('research')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('research')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('research')"></div>
-            </div>
-            <div class="window-title">AI Research Lab</div>
-            <div class="window-tabs">
-                <div class="window-tab active">Current Research</div>
-                <div class="window-tab">Publications</div>
-                <div class="window-tab">Experiments</div>
-            </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">Designed and coded by Aruna Kumar — 2025</p>
         </div>
-        <div class="window-content">
-            <h2 style="margin-bottom: 24px;">Research & Development</h2>
-            
-            <div class="project-card" style="margin-bottom: 20px;">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));">
-                        <i class="fas fa-microscope"></i>
-                    </div>
-                    <div>
-                        <div class="project-title">Interactive Web Interface Design</div>[1]
-                        <div class="project-subtitle">June 2025 - Present</div>
-                    </div>
-                </div>
-                <div class="project-description">Investigating the intersection of visual effects, animations, and user experience in modern web development. Focus on creating engaging interfaces that balance aesthetics with functionality, exploring neural network visualizations and 3D web graphics.</div>
-                <div class="project-tags">
-                    <span class="project-tag">WebGL</span>
-                    <span class="project-tag">Three.js</span>
-                    <span class="project-tag">UI Research</span>
-                    <span class="project-tag">Animation</span>
-                </div>
-            </div>
-            
-            <div class="project-card" style="margin-bottom: 20px;">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div>
-                        <div class="project-title">SAM-Adapter Model Optimization</div>[2]
-                        <div class="project-subtitle">March 2025 - Present</div>
-                    </div>
-                </div>
-                <div class="project-description">Advanced research on adapter techniques for fine-tuning the Segment Anything Model (SAM) for specialized image segmentation tasks. Focus on parameter efficiency and computational optimization.</div>
-                <div class="project-tags">
-                    <span class="project-tag">Deep Learning</span>
-                    <span class="project-tag">Computer Vision</span>
-                    <span class="project-tag">Model Adaptation</span>
-                    <span class="project-tag">PyTorch</span>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-orange), var(--accent-red));">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <div>
-                        <div class="project-title">Efficient Image Generation</div>[3]
-                        <div class="project-subtitle">January 2025 - May 2025</div>
-                    </div>
-                </div>
-                <div class="project-description">Research on optimizing image generation models using smaller, more efficient architectures like T5-small. Focus on reducing computational requirements while maintaining output quality for practical deployment scenarios.</div>
-                <div class="project-tags">
-                    <span class="project-tag">T5-Small</span>
-                    <span class="project-tag">Optimization</span>
-                    <span class="project-tag">Model Compression</span>
-                    <span class="project-tag">Efficiency</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Calculator Window -->
-    <div class="window" id="calculator-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('calculator')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('calculator')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('calculator')"></div>
-            </div>
-            <div class="window-title">Calculator</div>
-        </div>
-        <div class="window-content">
-            <div class="calculator">
-                <input type="text" class="calc-display" id="calcDisplay" readonly>
-                <div class="calc-buttons">
-                    <button class="calc-btn clear" onclick="clearCalc()">AC</button>
-                    <button class="calc-btn" onclick="appendToCalc('±')">±</button>
-                    <button class="calc-btn" onclick="appendToCalc('%')">%</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('/')">÷</button>
-                    
-                    <button class="calc-btn" onclick="appendToCalc('7')">7</button>
-                    <button class="calc-btn" onclick="appendToCalc('8')">8</button>
-                    <button class="calc-btn" onclick="appendToCalc('9')">9</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('*')">×</button>
-                    
-                    <button class="calc-btn" onclick="appendToCalc('4')">4</button>
-                    <button class="calc-btn" onclick="appendToCalc('5')">5</button>
-                    <button class="calc-btn" onclick="appendToCalc('6')">6</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('-')">−</button>
-                    
-                    <button class="calc-btn" onclick="appendToCalc('1')">1</button>
-                    <button class="calc-btn" onclick="appendToCalc('2')">2</button>
-                    <button class="calc-btn" onclick="appendToCalc('3')">3</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('+')">+</button>
-                    
-                    <button class="calc-btn" onclick="appendToCalc('0')" style="grid-column: span 2;">0</button>
-                    <button class="calc-btn" onclick="appendToCalc('.')">.</button>
-                    <button class="calc-btn operator" onclick="calculateResult()">=</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Terminal Window -->
-    <div class="window" id="terminal-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('terminal')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('terminal')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('terminal')"></div>
-            </div>
-            <div class="window-title">Terminal</div>
-        </div>
-        <div class="window-content">
-            <div class="code-editor">
-                <div class="code-line">
-                    <span class="line-number">1</span>
-                    <span class="code-comment">// Welcome to Portfolio OS Terminal</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">2</span>
-                    <span class="code-keyword">const</span> <span>portfolio</span> = <span class="code-keyword">new</span> <span>PortfolioOS</span>();
-                </div>
-                <div class="code-line">
-                    <span class="line-number">3</span>
-                    <span>portfolio.<span class="code-keyword">initialize</span>();</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">4</span>
-                    <span></span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">5</span>
-                    <span class="code-comment">// System Status: ✓ All systems operational</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">6</span>
-                    <span class="code-comment">// Neural networks: Active</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">7</span>
-                    <span class="code-comment">// 3D rendering: Optimized</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">8</span>
-                    <span class="code-comment">// User experience: Enhanced</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">9</span>
-                    <span></span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">10</span>
-                    <span>$ <span class="code-string">echo "Ready for innovation"</span></span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">11</span>
-                    <span class="code-keyword">Ready for innovation</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">12</span>
-                    <span>$ █</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Settings Window -->
-    <div class="window" id="settings-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('settings')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('settings')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('settings')"></div>
-            </div>
-            <div class="window-title">System Preferences</div>
-            <div class="window-tabs">
-                <div class="window-tab active">Appearance</div>
-                <div class="window-tab">Wallpaper</div>
-                <div class="window-tab">System</div>
-            </div>
-        </div>
-        <div class="window-content">
-            <h3 style="margin-bottom: 20px;">Wallpaper Selection</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;">
-                <div class="project-card" onclick="changeWallpaper('neural')" style="height: 100px; cursor: pointer;">
-                    <div style="text-align: center; padding: 20px;">
-                        <i class="fas fa-brain" style="font-size: 24px; color: var(--accent-blue);"></i>
-                        <div style="margin-top: 8px; font-size: 12px;">Neural Network</div>
-                    </div>
-                </div>
-                <div class="project-card" onclick="changeWallpaper('geometric')" style="height: 100px; cursor: pointer;">
-                    <div style="text-align: center; padding: 20px;">
-                        <i class="fas fa-shapes" style="font-size: 24px; color: var(--accent-purple);"></i>
-                        <div style="margin-top: 8px; font-size: 12px;">Geometric</div>
-                    </div>
-                </div>
-                <div class="project-card" onclick="changeWallpaper('matrix')" style="height: 100px; cursor: pointer;">
-                    <div style="text-align: center; padding: 20px;">
-                        <i class="fas fa-code" style="font-size: 24px; color: var(--accent-green);"></i>
-                        <div style="margin-top: 8px; font-size: 12px;">Matrix</div>
-                    </div>
-                </div>
-            </div>
-            
-            <h3 style="margin: 32px 0 20px;">System Information</h3>
-            <div class="project-card">
-                <div class="project-description">
-                    <strong>Portfolio OS</strong> v2.5.0<br>
-                    <strong>Build:</strong> Ultimate Edition<br>
-                    <strong>Processor:</strong> Neural Processing Unit<br>
-                    <strong>Memory:</strong> 16GB Unified<br>
-                    <strong>Graphics:</strong> WebGL 2.0 Accelerated<br>
-                    <strong>Features:</strong> 3D Rendering, AI Integration, Dynamic Wallpapers
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Resume, Notes, and Inbox windows (keeping previous content but with enhanced styling) -->
-    <div class="window" id="resume-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('resume')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('resume')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('resume')"></div>
-            </div>
-            <div class="window-title">Professional Resume</div>
-            <div class="window-tabs">
-                <div class="window-tab active">Overview</div>
-                <div class="window-tab">Skills</div>
-                <div class="window-tab">Download PDF</div>
-            </div>
-        </div>
-        <div class="window-content">
-            <h2 style="margin-bottom: 24px;">Computer Science Student</h2>
-            
-            <div class="project-card" style="margin-bottom: 20px;">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div>
-                        <div class="project-title">Education & Background</div>
-                        <div class="project-subtitle">Academic Excellence</div>
-                    </div>
-                </div>
-                <div class="project-description">
-                    <strong>Bachelor of Science in Computer Science</strong><br>
-                    Specializing in web development, machine learning, and interactive design. Strong focus on creating user-centered digital experiences with cutting-edge technologies.
-                </div>
-                <div class="project-tags">
-                    <span class="project-tag">Computer Science</span>
-                    <span class="project-tag">Machine Learning</span>
-                    <span class="project-tag">Web Development</span>
-                </div>
-            </div>
-            
-            <div class="project-card" style="margin-bottom: 20px;">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div>
-                        <div class="project-title">Core Competencies</div>[1][2]
-                        <div class="project-subtitle">Technical Skills</div>
-                    </div>
-                </div>
-                <div class="project-description">
-                    <strong>Frontend Development:</strong> Interactive web interfaces with visual effects and animations<br>
-                    <strong>AI/ML:</strong> SAM-Adapter techniques, model optimization, image generation<br>
-                    <strong>3D Graphics:</strong> Three.js, WebGL, interactive animations<br>
-                    <strong>Languages:</strong> JavaScript, TypeScript, Python, GLSL
-                </div>
-                <div class="project-tags">
-                    <span class="project-tag">JavaScript</span>
-                    <span class="project-tag">Python</span>
-                    <span class="project-tag">PyTorch</span>
-                    <span class="project-tag">Three.js</span>
-                    <span class="project-tag">WebGL</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="window" id="notes-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('notes')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('notes')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('notes')"></div>
-            </div>
-            <div class="window-title">Development Notes</div>
-            <div class="window-tabs">
-                <div class="window-tab active">Recent</div>
-                <div class="window-tab">AI/ML</div>
-                <div class="window-tab">Web Dev</div>
-            </div>
-        </div>
-        <div class="window-content">
-            <h2 style="margin-bottom: 24px;">Field Notes & Insights</h2>
-            
-            <div class="project-card" style="margin-bottom: 16px; border-left: 4px solid var(--accent-blue);">
-                <div class="project-title">WebGL Performance Optimization</div>[1]
-                <div class="project-description">Found that reducing draw calls by batching geometry significantly improves frame rates in complex 3D scenes. Consider implementing instanced rendering for repeated objects. Interactive web interfaces benefit greatly from GPU acceleration.</div>
-                <div class="project-tags">
-                    <span class="project-tag">WebGL</span>
-                    <span class="project-tag">Performance</span>
-                    <span class="project-tag">3D Graphics</span>
-                </div>
-            </div>
-            
-            <div class="project-card" style="margin-bottom: 16px; border-left: 4px solid var(--accent-purple);">
-                <div class="project-title">SAM-Adapter Implementation</div>[2]
-                <div class="project-description">Successfully implemented adapter techniques for fine-tuning SAM models. The approach significantly reduces training time while maintaining segmentation accuracy. Key insight: parameter-efficient adaptation works best for domain-specific tasks.</div>
-                <div class="project-tags">
-                    <span class="project-tag">SAM-Adapter</span>
-                    <span class="project-tag">Model Fine-tuning</span>
-                    <span class="project-tag">Efficiency</span>
-                </div>
-            </div>
-            
-            <div class="project-card" style="margin-bottom: 16px; border-left: 4px solid var(--accent-green);">
-                <div class="project-title">T5-Small Optimization Results</div>[3]
-                <div class="project-description">Achieved 40% reduction in model size while maintaining 95% of original performance in image generation tasks. Key optimization: selective layer freezing and knowledge distillation techniques.</div>
-                <div class="project-tags">
-                    <span class="project-tag">T5-Small</span>
-                    <span class="project-tag">Optimization</span>
-                    <span class="project-tag">Image Generation</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="window" id="inbox-window">
-        <div class="window-header">
-            <div class="window-controls">
-                <div class="window-control close" onclick="closeWindow('inbox')"></div>
-                <div class="window-control minimize" onclick="minimizeWindow('inbox')"></div>
-                <div class="window-control maximize" onclick="maximizeWindow('inbox')"></div>
-            </div>
-            <div class="window-title">Messages</div>
-            <div class="window-tabs">
-                <div class="window-tab active">Inbox (4)</div>
-                <div class="window-tab">Sent</div>
-                <div class="window-tab">Starred</div>
-            </div>
-        </div>
-        <div class="window-content">
-            <h2 style="margin-bottom: 24px;">Professional Correspondence</h2>
-            
-            <div class="project-card" style="margin-bottom: 16px; cursor: pointer;">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)); width: 40px; height: 40px;">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <div class="project-title">Sarah Chen - Tech Lead</div>
-                        <div class="project-subtitle">3D Portfolio Collaboration</div>
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-secondary);">2 hours ago</div>
-                </div>
-                <div class="project-description">Hi! I saw your incredible 3D portfolio work and would love to discuss a potential collaboration on an interactive web project. Your expertise in WebGL and neural network visualizations would be perfect for our upcoming platform...</div>
-            </div>
-            
-            <div class="project-card" style="margin-bottom: 16px; cursor: pointer;">
-                <div class="project-header">
-                    <div class="project-icon" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-blue)); width: 40px; height: 40px;">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <div class="project-title">AI Research Institute</div>
-                        <div class="project-subtitle">Research Opportunity</div>
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-secondary);">1 day ago</div>
-                </div>
-                <div class="project-description">We're impressed by your work on SAM-Adapter optimization and would like to invite you to join our research team for a summer internship focusing on model adaptation techniques...</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Enhanced Dock -->
-    <div class="dock">
-        <div class="dock-item" onclick="openWindow('projects')" title="Projects">
-            <i class="fas fa-code"></i>
-        </div>
-        <div class="dock-item" onclick="openWindow('research')" title="AI Research">
-            <i class="fas fa-brain"></i>
-        </div>
-        <div class="dock-item" onclick="openWindow('resume')" title="Resume">
-            <i class="fas fa-user-graduate"></i>
-        </div>
-        <div class="dock-item" onclick="openWindow('notes')" title="Dev Notes">
-            <i class="fas fa-sticky-note"></i>
-        </div>
-        <div class="dock-item" onclick="openWindow('inbox')" title="Messages">
-            <i class="fas fa-envelope"></i>
-        </div>
-        <div class="dock-item" onclick="openWindow('calculator')" title="Calculator">
-            <i class="fas fa-calculator"></i>
-        </div>
-        <div class="dock-item" onclick="openWindow('terminal')" title="Terminal">
-            <i class="fas fa-terminal"></i>
-        </div>
-        <div class="dock-item" onclick="showCommandLauncher()" title="Command Launcher (⌘K)">
-            <i class="fas fa-search"></i>
-        </div>
-    </div>
-
-    <!-- Enhanced Command Launcher -->
-    <div class="command-launcher" id="command-launcher">
-        <input type="text" class="command-input" placeholder="Search apps, files, and more..." id="command-input">
-        <div class="command-results" id="command-results"></div>
-    </div>
-
+    </footer>
+    
     <script>
-        // Ultimate Portfolio OS System
-        class UltimatePortfolioOS {
-            constructor() {
-                this.windows = new Map();
-                this.zIndex = 100;
-                this.currentWallpaper = 'neural';
-                this.commands = [
-                    { name: 'Open Projects', subtitle: 'View portfolio projects', icon: 'fas fa-code', action: () => this.openWindow('projects') },
-                    { name: 'Open AI Research', subtitle: 'Research lab and experiments', icon: 'fas fa-brain', action: () => this.openWindow('research') },
-                    { name: 'Open Resume', subtitle: 'Professional profile', icon: 'fas fa-user-graduate', action: () => this.openWindow('resume') },
-                    { name: 'Open Dev Notes', subtitle: 'Development insights', icon: 'fas fa-sticky-note', action: () => this.openWindow('notes') },
-                    { name: 'Open Messages', subtitle: 'Professional correspondence', icon: 'fas fa-envelope', action: () => this.openWindow('inbox') },
-                    { name: 'Open Calculator', subtitle: 'Scientific calculator', icon: 'fas fa-calculator', action: () => this.openWindow('calculator') },
-                    { name: 'Open Terminal', subtitle: 'Command line interface', icon: 'fas fa-terminal', action: () => this.openWindow('terminal') },
-                    { name: 'System Preferences', subtitle: 'Settings and customization', icon: 'fas fa-cog', action: () => this.openWindow('settings') },
-                    { name: 'Change Wallpaper', subtitle: 'Cycle through wallpapers', icon: 'fas fa-image', action: () => this.cycleWallpaper() },
-                    { name: 'Close All Windows', subtitle: 'Close all open windows', icon: 'fas fa-times', action: () => this.closeAllWindows() },
-                    { name: 'Show Desktop', subtitle: 'Minimize all windows', icon: 'fas fa-desktop', action: () => this.showDesktop() }
-                ];
-                
-                this.init();
-            }
+        // ================================================
+        // NOTHING.TECH INSPIRED PORTFOLIO INTERACTIONS
+        // ================================================
+        
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function updateCursor() {
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
             
-            init() {
-                this.createEnhancedParticles();
-                this.updateTime();
-                this.setupKeyboardShortcuts();
-                this.setupCommandLauncher();
-                this.setupWindowDragging();
-                this.initializeWallpapers();
-                this.setupSystemMonitoring();
-                
-                // Update time every second
-                setInterval(() => this.updateTime(), 1000);
-                
-                // Update system stats
-                setInterval(() => this.updateSystemStats(), 2000);
-            }
+            cursorX += dx * 0.1;
+            cursorY += dy * 0.1;
             
-            createEnhancedParticles() {
-                const desktop = document.getElementById('desktop');
-                const numberOfParticles = 80;
-                const colors = ['blue', 'purple', 'green'];
-                
-                for (let i = 0; i < numberOfParticles; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
-                    
-                    const size = Math.random() * 4 + 2;
-                    particle.style.width = size + 'px';
-                    particle.style.height = size + 'px';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 20 + 's';
-                    particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
-                    
-                    desktop.appendChild(particle);
-                }
-            }
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
             
-            updateTime() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('en-US', { 
-                    hour12: false,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-                const menuTimeString = now.toLocaleTimeString('en-US', { 
-                    hour: 'numeric', 
-                    minute: '2-digit',
-                    hour12: true 
-                });
-                const dateString = now.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric'
-                });
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+        
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('a, button, .project-card, .blog-card, .contact-item');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+        
+        // Smooth Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
                 
-                document.getElementById('clock-time').textContent = timeString;
-                document.getElementById('clock-date').textContent = dateString;
-                document.getElementById('current-time').textContent = menuTimeString;
-            }
-            
-            initializeWallpapers() {
-                this.setupNeuralWallpaper();
-                this.setupMatrixWallpaper();
-            }
-            
-            setupNeuralWallpaper() {
-                const canvas = document.getElementById('neuralCanvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                
-                const nodes = [];
-                const connections = [];
-                
-                // Create neural network nodes
-                for (let i = 0; i < 60; i++) {
-                    nodes.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        vx: (Math.random() - 0.5) * 1.5,
-                        vy: (Math.random() - 0.5) * 1.5,
-                        radius: Math.random() * 6 + 3,
-                        pulse: Math.random() * Math.PI * 2,
-                        color: `hsl(${180 + Math.random() * 60}, 70%, 60%)`
-                    });
-                }
-                
-                const animate = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Update and draw nodes
-                    nodes.forEach((node, index) => {
-                        node.x += node.vx;
-                        node.y += node.vy;
-                        node.pulse += 0.04;
-                        
-                        // Bounce off edges
-                        if (node.x <= 0 || node.x >= canvas.width) node.vx *= -1;
-                        if (node.y <= 0 || node.y >= canvas.height) node.vy *= -1;
-                        
-                        // Enhanced pulse effect
-                        const pulseRadius = node.radius + Math.sin(node.pulse) * 4;
-                        const alpha = 0.6 + Math.sin(node.pulse) * 0.4;
-                        
-                        // Outer glow
-                        ctx.beginPath();
-                        ctx.arc(node.x, node.y, pulseRadius + 15, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(88, 166, 255, 0.05)`;
-                        ctx.fill();
-                        
-                        // Inner glow
-                        ctx.beginPath();
-                        ctx.arc(node.x, node.y, pulseRadius + 8, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(88, 166, 255, 0.1)`;
-                        ctx.fill();
-                        
-                        // Core node
-                        ctx.beginPath();
-                        ctx.arc(node.x, node.y, pulseRadius, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(88, 166, 255, ${alpha})`;
-                        ctx.fill();
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                     
-                    // Enhanced connections
-                    nodes.forEach((node, i) => {
-                        nodes.slice(i + 1).forEach((otherNode, j) => {
-                            const distance = Math.sqrt(
-                                Math.pow(node.x - otherNode.x, 2) + 
-                                Math.pow(node.y - otherNode.y, 2)
-                            );
-                            
-                            if (distance < 180) {
-                                const alpha = 0.8 * (1 - distance / 180);
-                                const thickness = 4 * (1 - distance / 180);
-                                
-                                // Connection line
-                                ctx.beginPath();
-                                ctx.moveTo(node.x, node.y);
-                                ctx.lineTo(otherNode.x, otherNode.y);
-                                ctx.strokeStyle = `rgba(88, 166, 255, ${alpha})`;
-                                ctx.lineWidth = thickness;
-                                ctx.stroke();
-                                
-                                // Data flow particles
-                                const flowProgress = (Date.now() * 0.003 + i + j) % 1;
-                                const flowX = node.x + (otherNode.x - node.x) * flowProgress;
-                                const flowY = node.y + (otherNode.y - node.y) * flowProgress;
-                                
-                                ctx.beginPath();
-                                ctx.arc(flowX, flowY, 4, 0, Math.PI * 2);
-                                ctx.fillStyle = `rgba(124, 227, 139, ${alpha})`;
-                                ctx.fill();
-                            }
-                        });
-                    });
-                    
-                    requestAnimationFrame(animate);
-                };
-                
-                animate();
-                
-                // Handle resize
-                window.addEventListener('resize', () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                });
-            }
-            
-            setupMatrixWallpaper() {
-                const canvas = document.getElementById('matrixCanvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                
-                const columns = Math.floor(canvas.width / 20);
-                const drops = Array(columns).fill(1);
-                
-                const drawMatrix = () => {
-                    ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    ctx.fillStyle = '#7ce38b';
-                    ctx.font = '15px JetBrains Mono';
-                    
-                    for (let i = 0; i < drops.length; i++) {
-                        const text = String.fromCharCode(Math.floor(Math.random() * 94) + 33);
-                        ctx.fillText(text, i * 20, drops[i] * 20);
-                        
-                        if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-                            drops[i] = 0;
-                        }
-                        drops[i]++;
-                    }
-                };
-                
-                setInterval(drawMatrix, 50);
-                
-                window.addEventListener('resize', () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                });
-            }
-            
-            changeWallpaper(wallpaperName) {
-                // Hide all wallpapers
-                document.querySelectorAll('.wallpaper').forEach(w => w.classList.remove('active'));
-                
-                // Show selected wallpaper
-                document.getElementById(`wallpaper-${wallpaperName}`).classList.add('active');
-                this.currentWallpaper = wallpaperName;
-            }
-            
-            cycleWallpaper() {
-                const wallpapers = ['neural', 'geometric', 'matrix'];
-                const currentIndex = wallpapers.indexOf(this.currentWallpaper);
-                const nextIndex = (currentIndex + 1) % wallpapers.length;
-                this.changeWallpaper(wallpapers[nextIndex]);
-            }
-            
-            setupSystemMonitoring() {
-                // Simulate system stats
-                setInterval(() => {
-                    const cpuUsage = 30 + Math.random() * 40;
-                    const memoryUsage = 50 + Math.random() * 30;
-                    const storageUsage = 70 + Math.random() * 15;
-                    
-                    document.querySelector('.cpu-bar').style.width = cpuUsage + '%';
-                    document.querySelector('.memory-bar').style.width = memoryUsage + '%';
-                    document.querySelector('.storage-bar').style.width = storageUsage + '%';
-                    
-                    document.querySelectorAll('.system-stat')[0].querySelector('span:last-child').textContent = Math.round(cpuUsage) + '%';
-                    document.querySelectorAll('.system-stat')[1].querySelector('span:last-child').textContent = Math.round(memoryUsage) + '%';
-                    document.querySelectorAll('.system-stat')[2].querySelector('span:last-child').textContent = Math.round(storageUsage) + '%';
-                }, 3000);
-            }
-            
-            openWindow(windowName) {
-                const windowElement = document.getElementById(`${windowName}-window`);
-                const dockItem = document.querySelector(`[onclick*="${windowName}"]`);
-                
-                if (!windowElement) return;
-                
-                this.hideCommandLauncher();
-                
-                // Position window with smart placement
-                if (!this.windows.has(windowName)) {
-                    const offset = this.windows.size * 40;
-                    windowElement.style.top = (80 + offset) + 'px';
-                    windowElement.style.left = (150 + offset) + 'px';
-                    windowElement.style.width = '900px';
-                    windowElement.style.height = '650px';
+                    // Update active nav
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
                 }
-                
-                // Show window with animation
-                windowElement.classList.add('active');
-                windowElement.classList.add('opening');
-                windowElement.style.zIndex = ++this.zIndex;
-                
-                // Update dock
-                document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
-                if (dockItem) {
-                    dockItem.classList.add('active');
+            });
+        });
+        
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
-                
-                this.windows.set(windowName, windowElement);
-                
-                // Icon click animation
-                const desktopIcon = document.querySelector(`[onclick*="${windowName}"]`);
-                if (desktopIcon && desktopIcon.classList.contains('desktop-icon')) {
-                    desktopIcon.classList.add('clicked');
-                    setTimeout(() => desktopIcon.classList.remove('clicked'), 300);
-                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section-content').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Project Card Interactions
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Blog Card Interactions
+        const blogCards = document.querySelectorAll('.blog-card');
+        blogCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Simulate blog post opening
+                alert('Blog post would open here');
+            });
+        });
+        
+        // Contact Form
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const submitBtn = contactForm.querySelector('.form-submit');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'SENDING...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.textContent = 'SENT ✓';
+                contactForm.reset();
                 
                 setTimeout(() => {
-                    windowElement.classList.remove('opening');
-                }, 400);
-            }
-            
-            closeWindow(windowName) {
-                const windowElement = document.getElementById(`${windowName}-window`);
-                const dockItem = document.querySelector(`[onclick*="${windowName}"]`);
-                
-                if (windowElement) {
-                    windowElement.classList.remove('active');
-                    windowElement.classList.remove('maximized');
-                    windowElement.classList.remove('minimized');
-                }
-                
-                if (dockItem) {
-                    dockItem.classList.remove('active');
-                }
-                
-                this.windows.delete(windowName);
-            }
-            
-            minimizeWindow(windowName) {
-                const windowElement = document.getElementById(`${windowName}-window`);
-                if (windowElement) {
-                    windowElement.classList.add('minimized');
-                    setTimeout(() => {
-                        windowElement.classList.remove('active');
-                        windowElement.classList.remove('minimized');
-                    }, 400);
-                }
-            }
-            
-            maximizeWindow(windowName) {
-                const windowElement = document.getElementById(`${windowName}-window`);
-                if (windowElement) {
-                    windowElement.classList.toggle('maximized');
-                }
-            }
-            
-            closeAllWindows() {
-                this.windows.forEach((_, windowName) => {
-                    this.closeWindow(windowName);
-                });
-            }
-            
-            showDesktop() {
-                this.windows.forEach((_, windowName) => {
-                    this.minimizeWindow(windowName);
-                });
-                this.hideCommandLauncher();
-            }
-            
-            setupKeyboardShortcuts() {
-                document.addEventListener('keydown', (e) => {
-                    // Command/Ctrl + K for command launcher
-                    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                        e.preventDefault();
-                        this.showCommandLauncher();
-                    }
-                    
-                    // Escape to close command launcher
-                    if (e.key === 'Escape') {
-                        this.hideCommandLauncher();
-                    }
-                    
-                    // Command/Ctrl + W to close active window
-                    if ((e.metaKey || e.ctrlKey) && e.key === 'w') {
-                        e.preventDefault();
-                        let topWindow = null;
-                        let maxZ = 0;
-                        this.windows.forEach((element, name) => {
-                            const z = parseInt(element.style.zIndex) || 0;
-                            if (z > maxZ) {
-                                maxZ = z;
-                                topWindow = name;
-                            }
-                        });
-                        if (topWindow) this.closeWindow(topWindow);
-                    }
-                    
-                    // Command/Ctrl + T for terminal
-                    if ((e.metaKey || e.ctrlKey) && e.key === 't') {
-                        e.preventDefault();
-                        this.openWindow('terminal');
-                    }
-                    
-                    // Command/Ctrl + M to minimize all
-                    if ((e.metaKey || e.ctrlKey) && e.key === 'm') {
-                        e.preventDefault();
-                        this.showDesktop();
-                    }
-                });
-            }
-            
-            setupCommandLauncher() {
-                const launcher = document.getElementById('command-launcher');
-                const input = document.getElementById('command-input');
-                const results = document.getElementById('command-results');
-                
-                input.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase();
-                    const filteredCommands = this.commands.filter(cmd => 
-                        cmd.name.toLowerCase().includes(query) || 
-                        cmd.subtitle.toLowerCase().includes(query)
-                    );
-                    
-                    results.innerHTML = '';
-                    filteredCommands.forEach((cmd, index) => {
-                        const result = document.createElement('div');
-                        result.className = 'command-result';
-                        result.innerHTML = `
-                            <i class="${cmd.icon}"></i>
-                            <div class="command-result-content">
-                                <div class="command-result-title">${cmd.name}</div>
-                                <div class="command-result-subtitle">${cmd.subtitle}</div>
-                            </div>
-                        `;
-                        result.addEventListener('click', () => {
-                            cmd.action();
-                            this.hideCommandLauncher();
-                        });
-                        results.appendChild(result);
-                    });
-                });
-                
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        const firstResult = results.querySelector('.command-result');
-                        if (firstResult) {
-                            firstResult.click();
-                        }
-                    }
-                });
-            }
-            
-            showCommandLauncher() {
-                const launcher = document.getElementById('command-launcher');
-                const input = document.getElementById('command-input');
-                
-                launcher.classList.add('active');
-                input.focus();
-                input.value = '';
-                
-                // Show all commands initially
-                const results = document.getElementById('command-results');
-                results.innerHTML = '';
-                this.commands.forEach(cmd => {
-                    const result = document.createElement('div');
-                    result.className = 'command-result';
-                    result.innerHTML = `
-                        <i class="${cmd.icon}"></i>
-                        <div class="command-result-content">
-                            <div class="command-result-title">${cmd.name}</div>
-                            <div class="command-result-subtitle">${cmd.subtitle}</div>
-                        </div>
-                    `;
-                    result.addEventListener('click', () => {
-                        cmd.action();
-                        this.hideCommandLauncher();
-                    });
-                    results.appendChild(result);
-                });
-            }
-            
-            hideCommandLauncher() {
-                const launcher = document.getElementById('command-launcher');
-                launcher.classList.remove('active');
-            }
-            
-            setupWindowDragging() {
-                document.querySelectorAll('.window-header').forEach(header => {
-                    let isDragging = false;
-                    let currentX;
-                    let currentY;
-                    let initialX;
-                    let initialY;
-                    let xOffset = 0;
-                    let yOffset = 0;
-                    
-                    header.addEventListener('mousedown', (e) => {
-                        if (e.target.classList.contains('window-control')) return;
-                        
-                        const window = header.closest('.window');
-                        if (window.classList.contains('maximized')) return;
-                        
-                        initialX = e.clientX - xOffset;
-                        initialY = e.clientY - yOffset;
-                        
-                        if (e.target === header || header.contains(e.target)) {
-                            isDragging = true;
-                            window.style.zIndex = ++this.zIndex;
-                        }
-                    });
-                    
-                    document.addEventListener('mousemove', (e) => {
-                        if (isDragging) {
-                            e.preventDefault();
-                            const window = header.closest('.window');
-                            
-                            currentX = e.clientX - initialX;
-                            currentY = e.clientY - initialY;
-                            
-                            xOffset = currentX;
-                            yOffset = currentY;
-                            
-                            window.style.left = Math.max(0, currentX) + 'px';
-                            window.style.top = Math.max(32, currentY) + 'px';
-                        }
-                    });
-                    
-                    document.addEventListener('mouseup', () => {
-                        initialX = currentX;
-                        initialY = currentY;
-                        isDragging = false;
-                    });
-                });
-            }
-        }
-        
-        // Calculator functions
-        function clearCalc() {
-            document.getElementById('calcDisplay').value = '';
-        }
-        
-        function appendToCalc(value) {
-            const display = document.getElementById('calcDisplay');
-            if (value === '±') {
-                const current = display.value;
-                if (current.startsWith('-')) {
-                    display.value = current.substring(1);
-                } else {
-                    display.value = '-' + current;
-                }
-            } else {
-                display.value += value;
-            }
-        }
-        
-        function calculateResult() {
-            const display = document.getElementById('calcDisplay');
-            try {
-                const result = eval(display.value.replace('×', '*').replace('÷', '/').replace('−', '-'));
-                display.value = result;
-            } catch {
-                display.value = 'Error';
-                setTimeout(() => {
-                    display.value = '';
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                 }, 2000);
+            }, 1500);
+        });
+        
+        // Click to Copy Functionality
+        const contactItems = document.querySelectorAll('.contact-item[data-copy]');
+        contactItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const text = item.getAttribute('data-copy');
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    const label = item.querySelector('.contact-label');
+                    const originalText = label.textContent;
+                    
+                    label.textContent = 'COPIED!';
+                    item.style.transform = 'translateY(-4px)';
+                    
+                    setTimeout(() => {
+                        label.textContent = originalText;
+                        item.style.transform = 'translateY(0)';
+                    }, 1000);
+                });
+            });
+        });
+        
+        // Glitch Effect on Hover
+        const glitchElement = document.querySelector('.glitch');
+        let glitchTimeout;
+        
+        glitchElement.addEventListener('mouseenter', () => {
+            glitchElement.style.animation = 'none';
+            clearTimeout(glitchTimeout);
+            
+            glitchTimeout = setTimeout(() => {
+                glitchElement.style.animation = '';
+            }, 100);
+        });
+        
+        // Parallax Effect for Hero
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const heroTitle = document.querySelector('.home-title');
+            
+            if (heroTitle) {
+                heroTitle.style.transform = `translateY(${scrollY * 0.1}px)`;
             }
+        });
+        
+        // Active Navigation on Scroll
+        const sections = document.querySelectorAll('.section');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Performance Optimization
+        let ticking = false;
+        
+        function updateOnScroll() {
+            // Batch scroll-based updates here
+            ticking = false;
         }
         
-        // Global functions for window controls
-        function openWindow(windowName) {
-            portfolioOS.openWindow(windowName);
-        }
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
+        });
         
-        function closeWindow(windowName) {
-            portfolioOS.closeWindow(windowName);
-        }
-        
-        function minimizeWindow(windowName) {
-            portfolioOS.minimizeWindow(windowName);
-        }
-        
-        function maximizeWindow(windowName) {
-            portfolioOS.maximizeWindow(windowName);
-        }
-        
-        function showCommandLauncher() {
-            portfolioOS.showCommandLauncher();
-        }
-        
-        function changeWallpaper(wallpaperName) {
-            portfolioOS.changeWallpaper(wallpaperName);
-        }
-        
-        function openSettings() {
-            portfolioOS.openWindow('settings');
-        }
-        
-        // Initialize Ultimate Portfolio OS
-        const portfolioOS = new UltimatePortfolioOS();
-        
-        // Welcome sequence
-        setTimeout(() => {
-            portfolioOS.openWindow('projects');
-        }, 1500);
+        // Initialize Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Stagger animation for project cards
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+            
+            // Initialize other animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        });
     </script>
 </body>
 </html>
