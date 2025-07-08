@@ -1138,7 +1138,10 @@
         updateCursor();
         
         // Cursor hover effects
-        const hoverElements = document.querySelectorAll('a, button, .project-card, .blog-card, .contact-item');
+        const body = document.body;
+        const hoverElements = document.querySelectorAll(
+        'body'
+        );
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
