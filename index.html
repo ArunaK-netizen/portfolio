@@ -4,850 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARUNA KUMAR — COMPUTER SCIENCE</title>
-    <style>
-        /* ==============================================
-           NOTHING.TECH INSPIRED PORTFOLIO
-           Clean, Intelligent, Deeply Intentional
-        ============================================== */
-        
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
-        
-        :root {
-            /* Nothing.tech Color System */
-            --black: #000000;
-            --white: #ffffff;
-            --gray-100: #f5f5f5;
-            --gray-200: #e0e0e0;
-            --gray-300: #cccccc;
-            --gray-400: #999999;
-            --gray-500: #666666;
-            --gray-600: #333333;
-            --gray-700: #1a1a1a;
-            --accent: #ff3333; /* Glitch Red */
-            
-            /* Typography */
-            --font-primary: 'Space Grotesk', sans-serif;
-            --font-mono: 'IBM Plex Mono', monospace;
-            
-            /* Spacing System */
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 2rem;
-            --space-lg: 4rem;
-            --space-xl: 8rem;
-            --space-xxl: 16rem;
-            
-            /* Layout */
-            --max-width: 1400px;
-            --grid-gap: 2rem;
-            
-            /* Animation */
-            --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        /* ==============================================
-           RESET & BASE STYLES
-        ============================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        *::selection {
-            background: var(--accent);
-            color: var(--white);
-        }
-        
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-        
-        body {
-            font-family: var(--font-primary);
-            background: var(--white);
-            color: var(--black);
-            line-height: 1.4;
-            overflow-x: hidden;
-            cursor: none;
-        }
-        
-        /* ==============================================
-           CUSTOM CURSOR
-        ============================================== */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: var(--black);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            mix-blend-mode: difference;
-        }
-        
-        .cursor.hover {
-            transform: scale(3);
-            background: var(--accent);
-            mix-blend-mode: normal;
-        }
-        
-        /* ==============================================
-           NAVIGATION
-        ============================================== */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        
-        .nav-container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 var(--space-md);
-        }
-        
-        .nav-logo {
-            font-family: var(--font-mono);
-            font-weight: 600;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--black);
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: var(--space-lg);
-            list-style: none;
-        }
-        
-        .nav-link {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--gray-500);
-            text-decoration: none;
-            transition: all 0.3s var(--ease-out);
-            position: relative;
-        }
-        
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--black);
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s var(--ease-out);
-        }
-        
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
-        
-        /* ==============================================
-           LAYOUT CONTAINERS
-        ============================================== */
-        .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 var(--space-md);
-        }
-        
-        .section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .section-content {
-            width: 100%;
-            opacity: 0;
-            transform: translateY(60px);
-            transition: all 1.2s var(--spring);
-        }
-        
-        .section-content.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* ==============================================
-           HOME SECTION
-        ============================================== */
-        .home {
-            text-align: center;
-            padding-top: 80px;
-        }
-        
-        .home-title {
-            font-family: var(--font-primary);
-            font-size: clamp(3rem, 8vw, 8rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            line-height: 0.9;
-            margin-bottom: var(--space-lg);
-            color: var(--black);
-        }
-        
-        .home-subtitle {
-            font-family: var(--font-mono);
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--gray-500);
-            margin-bottom: var(--space-xl);
-            line-height: 1.6;
-        }
-        
-        .home-cta {
-            display: inline-block;
-            padding: var(--space-sm) var(--space-lg);
-            background: var(--black);
-            color: var(--white);
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            transition: all 0.3s var(--ease-out);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .home-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--accent);
-            transition: left 0.3s var(--ease-out);
-            z-index: -1;
-        }
-        
-        .home-cta:hover::before {
-            left: 0;
-        }
-        
-        .home-cta:hover {
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-        
-        /* ==============================================
-           WORK SECTION
-        ============================================== */
-        .work {
-            padding: var(--space-xxl) 0;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: var(--space-xl);
-        }
-        
-        .section-title {
-            font-family: var(--font-mono);
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--black);
-            margin-bottom: var(--space-md);
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: var(--grid-gap);
-            margin-top: var(--space-xl);
-        }
-        
-        .project-card {
-            background: var(--white);
-            padding: var(--space-lg);
-            border: 1px solid var(--gray-200);
-            transition: all 0.4s var(--ease-out);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 51, 51, 0.1), transparent);
-            transition: left 0.6s var(--ease-out);
-        }
-        
-        .project-card:hover::before {
-            left: 100%;
-        }
-        
-        .project-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-        }
-        
-        .project-name {
-            font-family: var(--font-primary);
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--black);
-            margin-bottom: var(--space-sm);
-        }
-        
-        .project-description {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--gray-500);
-            margin-bottom: var(--space-md);
-            line-height: 1.6;
-        }
-        
-        .project-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-xs);
-            margin-bottom: var(--space-md);
-        }
-        
-        .tech-tag {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--gray-600);
-            background: var(--gray-100);
-            padding: 0.3rem 0.8rem;
-        }
-        
-        .project-links {
-            display: flex;
-            gap: var(--space-md);
-        }
-        
-        .project-link {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--accent);
-            text-decoration: none;
-            transition: all 0.3s var(--ease-out);
-        }
-        
-        .project-link:hover {
-            color: var(--black);
-        }
-        
-        /* ==============================================
-           ABOUT SECTION
-        ============================================== */
-        .about {
-            padding: var(--space-xxl) 0;
-            text-align: center;
-        }
-        
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .about-image {
-            width: 200px;
-            height: 200px;
-            background: var(--gray-200);
-            margin: 0 auto var(--space-lg);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s var(--ease-out);
-        }
-        
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--black);
-            opacity: 0;
-            transition: opacity 0.3s var(--ease-out);
-        }
-        
-        .about-image:hover::before {
-            opacity: 0.1;
-        }
-        
-        .about-image:hover {
-            transform: scale(1.05);
-        }
-        
-        .about-text {
-            font-family: var(--font-primary);
-            font-size: 1.2rem;
-            font-weight: 400;
-            line-height: 1.8;
-            color: var(--gray-600);
-            margin-bottom: var(--space-lg);
-        }
-        
-        .about-list {
-            text-align: left;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .about-section {
-            margin-bottom: var(--space-lg);
-        }
-        
-        .about-section h3 {
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--black);
-            margin-bottom: var(--space-sm);
-        }
-        
-        .about-section ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .about-section li {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--gray-500);
-            margin-bottom: var(--space-xs);
-            padding-left: var(--space-sm);
-            position: relative;
-        }
-        
-        .about-section li::before {
-            content: '—';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-        
-        /* ==============================================
-           BLOG SECTION
-        ============================================== */
-        .blog {
-            padding: var(--space-xxl) 0;
-            background: var(--gray-100);
-        }
-        
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: var(--grid-gap);
-            margin-top: var(--space-xl);
-        }
-        
-        .blog-card {
-            background: var(--white);
-            padding: var(--space-lg);
-            transition: all 0.4s var(--ease-out);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .blog-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--accent);
-            transform: translateX(-100%);
-            transition: transform 0.4s var(--ease-out);
-        }
-        
-        .blog-card:hover::before {
-            transform: translateX(0);
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .blog-title {
-            font-family: var(--font-primary);
-            font-size: 1.3rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--black);
-            margin-bottom: var(--space-sm);
-            line-height: 1.3;
-        }
-        
-        .blog-excerpt {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--gray-500);
-            line-height: 1.6;
-            margin-bottom: var(--space-md);
-        }
-        
-        .blog-date {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--accent);
-        }
-        
-        /* ==============================================
-           CONTACT SECTION
-        ============================================== */
-        .contact {
-            padding: var(--space-xxl) 0;
-        }
-        
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .contact-form {
-            margin-top: var(--space-xl);
-        }
-        
-        .form-group {
-            margin-bottom: var(--space-lg);
-            text-align: left;
-        }
-        
-        .form-label {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--black);
-            margin-bottom: var(--space-xs);
-            display: block;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: var(--space-sm);
-            border: 1px solid var(--gray-300);
-            background: var(--white);
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--black);
-            transition: all 0.3s var(--ease-out);
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: var(--gray-100);
-        }
-        
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .form-submit {
-            width: 100%;
-            padding: var(--space-sm) var(--space-lg);
-            background: var(--black);
-            color: var(--white);
-            border: none;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: all 0.3s var(--ease-out);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .form-submit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--accent);
-            transition: left 0.3s var(--ease-out);
-            z-index: -1;
-        }
-        
-        .form-submit:hover::before {
-            left: 0;
-        }
-        
-        .form-submit:hover {
-            transform: translateY(-2px);
-        }
-        
-        .contact-alt {
-            margin-top: var(--space-xl);
-            display: flex;
-            justify-content: center;
-            gap: var(--space-lg);
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            cursor: pointer;
-            transition: all 0.3s var(--ease-out);
-        }
-        
-        .contact-item:hover {
-            transform: translateY(-2px);
-        }
-        
-        .contact-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 0.8rem;
-            transition: all 0.3s var(--ease-out);
-        }
-        
-        .contact-item:hover .contact-icon {
-            background: var(--accent);
-        }
-        
-        .contact-label {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--gray-500);
-        }
-        
-        /* ==============================================
-           FOOTER
-        ============================================== */
-        .footer {
-            background: var(--black);
-            color: var(--white);
-            padding: var(--space-lg) 0;
-            text-align: center;
-        }
-        
-        .footer-text {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--gray-400);
-        }
-        
-        /* ==============================================
-           GLITCH EFFECTS
-        ============================================== */
-        .glitch {
-            position: relative;
-        }
-        
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-        }
-        
-        .glitch::before {
-            animation: glitch-1 0.5s infinite;
-            color: var(--accent);
-            z-index: -1;
-        }
-        
-        .glitch::after {
-            animation: glitch-2 0.5s infinite;
-            color: var(--gray-300);
-            z-index: -2;
-        }
-        
-        @keyframes glitch-1 {
-            0%, 14%, 15%, 49%, 50%, 99%, 100% {
-                transform: translate(0);
-                opacity: 0;
-            }
-            15%, 49% {
-                transform: translate(-2px, 2px);
-                opacity: 0.8;
-            }
-        }
-        
-        @keyframes glitch-2 {
-            0%, 20%, 21%, 62%, 63%, 99%, 100% {
-                transform: translate(0);
-                opacity: 0;
-            }
-            21%, 62% {
-                transform: translate(2px, -2px);
-                opacity: 0.8;
-            }
-        }
-        
-        /* ==============================================
-           RESPONSIVE DESIGN
-        ============================================== */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .projects-grid,
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-alt {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .section {
-                padding: var(--space-lg) 0;
-            }
-        }
-        
-        /* ==============================================
-           ANIMATIONS
-        ============================================== */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s var(--ease-out) forwards;
-        }
-        
-        .slide-up {
-            animation: slideUp 1s var(--spring) forwards;
-        }
-        
-        /* ==============================================
-           UTILITY CLASSES
-        ============================================== */
-        .text-center {
-            text-align: center;
-        }
-        
-        .text-left {
-            text-align: left;
-        }
-        
-        .text-right {
-            text-align: right;
-        }
-        
-        .mb-sm {
-            margin-bottom: var(--space-sm);
-        }
-        
-        .mb-md {
-            margin-bottom: var(--space-md);
-        }
-        
-        .mb-lg {
-            margin-bottom: var(--space-lg);
-        }
-        
-        .mt-sm {
-            margin-top: var(--space-sm);
-        }
-        
-        .mt-md {
-            margin-top: var(--space-md);
-        }
-        
-        .mt-lg {
-            margin-top: var(--space-lg);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -881,8 +38,109 @@
             </div>
         </div>
     </section>
+
+    <!-- Confidential Modal -->
+    <div id="confidentialModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>CONFIDENTIAL</h2>
+        <p>I'm currently at IGCAR — which means I’m operating under top-secret scientist mode. Sharing links? Yeah, that's classified. 
+            If I drop a URL, a nuclear physicist might personally respawn in my inbox. So let's just say… access denied, Agent.</p>
+    </div>
+    </div>
+
+
     
-    <!-- Work Section -->
+    <!-- About Section -->
+    <section id="about" class="section about-cmf">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="section-title-cmf">ABOUT</h2>
+                    <div class="title-indicator"></div>
+                </div>
+                
+                <div class="about-grid-cmf">
+                    <div class="about-visual-panel">
+                        <div class="profile-container">
+                            <div class="profile-frame">
+                                <div class="profile-image">
+                                    <img src="assets/Arun.jpg" alt="" class="profile-image-img">
+                                </div>
+                                <div class="frame-dots"></div>
+                            </div>
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <span>AVAILABLE</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-content-panel">
+                        <div class="content-block">
+                            <div class="block-header">
+                                <span class="block-number">01</span>
+                                <h3>PROFILE</h3>
+                            </div>
+                            <p class="profile-description">
+                                Computer Science student at VIT Chennai. Building intelligent systems that bridge the gap between human needs and technological possibilities. CGPA: 9.13/10.
+                            </p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <div class="block-header">
+                                <span class="block-number">02</span>
+                                <h3>FOCUS AREAS</h3>
+                            </div>
+                            <div class="focus-grid">
+                                <div class="focus-item">
+                                    <div class="focus-dot"></div>
+                                    <span>Computer Vision</span>
+                                </div>
+                                <div class="focus-item">
+                                    <div class="focus-dot"></div>
+                                    <span>Deep Learning</span>
+                                </div>
+                                <div class="focus-item">
+                                    <div class="focus-dot"></div>
+                                    <span>System Architecture</span>
+                                </div>
+                                <div class="focus-item">
+                                    <div class="focus-dot"></div>
+                                    <span>Real-time ML</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-block">
+                            <div class="block-header">
+                                <span class="block-number">03</span>
+                                <h3>CURRENT WORK</h3>
+                            </div>
+                            <div class="work-list">
+                                <div class="work-item">
+                                    <div class="work-status active"></div>
+                                    <span>ConceptAttention Adapter</span>
+                                </div>
+                                <div class="work-item">
+                                    <div class="work-status active"></div>
+                                    <span>Advances in Image Segmentation</span>
+                                </div>
+                                <div class="work-item">
+                                    <div class="work-status active"></div>
+                                    <span>Implementing Papers</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+        <!-- Work Section -->
     <section id="work" class="section work">
         <div class="container">
             <div class="section-content">
@@ -920,8 +178,8 @@
                             <span class="tech-tag">Mobile ML</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link">GitHub →</a>
-                            <a href="#" class="project-link">Demo →</a>
+                            <a href="https://github.com/ArunaK-netizen/PaveSense" target="_blank" class="project-link">GitHub →</a>
+                            <a href="https://github.com/ArunaK-netizen/PaveSense" target="_blank" class="project-link">Demo →</a>
                         </div>
                     </div>
                     
@@ -937,8 +195,8 @@
                             <span class="tech-tag">JavaScript</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link">GitHub →</a>
-                            <a href="#" class="project-link">Live →</a>
+                            <a href="https://github.com/scopecc/faculty_selection" target="_blank" class="project-link">GitHub →</a>
+                            <a href="https://faculty-selection.vercel.app/" target="_blank" class="project-link">Live →</a>
                         </div>
                     </div>
                     
@@ -955,100 +213,84 @@
                         </div>
                         <div class="project-links">
                             <a href="#" class="project-link">GitHub →</a>
-                            <a href="#" class="project-link">Paper →</a>
+                            <a href="#" class="project-link">Demo →</a>
                         </div>
                     </div>
+
+                    <div class="project-card">
+                        <h3 class="project-name">BumpAlert</h3>
+                        <p class="project-description">
+                            An intelligent road bump detection system leveraging LSTM-based sequence modeling and PPO reinforcement learning. Simulated with PyBullet, it identifies speed breakers in real-time using accelerometer patterns—enhancing road safety and ride comfort.
+                        </p>
+                        <div class="project-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PyBullet</span>
+                            <span class="tech-tag">LSTM</span>
+                            <span class="tech-tag">Reinforcement Learning</span>
+                            <span class="tech-tag">Deep Learning</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ArunaK-netizen/BumpAlert-V2" class="project-link">GitHub →</a>
+                            <a href="https://github.com/ArunaK-netizen/BumpAlert-V2" class="project-link">Demo →</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- About Section -->
-    <section id="about" class="section about">
-        <div class="container">
-            <div class="section-content">
-                <div class="section-header">
-                    <h2 class="section-title">ABOUT</h2>
-                </div>
-                
-                <div class="about-content">
-                    <div class="about-image"></div>
-                    
-                    <p class="about-text">
-                        I'm Aruna Kumar, a Computer Science student at VIT Chennai with a passion for building intelligent systems that solve real-world problems. Currently pursuing my B.Tech with a CGPA of 9.13, I specialize in deep learning, computer vision, and system architecture.
-                    </p>
-                    
-                    <div class="about-list">
-                        <div class="about-section">
-                            <h3>What I'm Into</h3>
-                            <ul>
-                                <li>Computer Vision & Deep Learning</li>
-                                <li>Neural Architecture Design</li>
-                                <li>System Architecture & Performance</li>
-                                <li>Real-time ML Applications</li>
-                                <li>Distributed Computing</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="about-section">
-                            <h3>Currently Building</h3>
-                            <ul>
-                                <li>ConceptAttention Adapter for Object Detection</li>
-                                <li>Mobile-based Infrastructure Monitoring</li>
-                                <li>Scalable ML Pipeline Architectures</li>
-                                <li>Open Source Computer Vision Tools</li>
-                            </ul>
+    <section id="experience" class="section experience-cmf">
+    <div class="container">
+        <div class="section-content">
+            <div class="section-header">
+                <h2 class="section-title-cmf">EXPERIENCE</h2>
+                <div class="timeline-line"></div>
+            </div>
+            
+            <div class="timeline-wrapper">
+                <div class="timeline-items">
+
+                    <!-- Deep Learning Intern -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-card">
+                            <div class="card-date">MAY 2025 – JUL 2025</div>
+                            <h3>Deep Learning Intern – IGCAR</h3>
+                            <p><strong>Indira Gandhi Centre for Atomic Research</strong>, Kalpakkam, Tamil Nadu</p>
+                            <p>
+                                • Designed a modular adapter extension for <em>ConceptAttention</em> to improve camouflaged object detection in natural scenes.<br><br>
+                                • Implemented <strong>diffusion-based cross-attention</strong> with hierarchical fusion for complex occlusion handling.<br><br>
+                                • Benchmarked performance improvements against existing vision transformers on synthetic and real-world datasets.<br><br>
+                                <strong>Tools:</strong> Python, PyTorch, HuggingFace Diffusers, OpenCV, NumPy, Matplotlib
+                            </p>
                         </div>
                     </div>
+
+                    <!-- Machine Learning Intern -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="card-date">MAY 2024 – JUN 2024</div>
+                            <h3>Machine Learning Intern – IGCAR</h3>
+                            <p><strong>Indira Gandhi Centre for Atomic Research</strong>, Kalpakkam, Tamil Nadu</p>
+                            <p>
+                                • Built a deep learning-powered vehicle entry system using a custom <strong>CNN-OCR</strong> pipeline for license plate recognition.<br><br>
+                                • Integrated <strong>RFID-based access control</strong> with real-time plate detection to enhance campus security workflows.<br><br>
+                                • Developed end-to-end data collection, annotation, and deployment pipeline for internal use.<br><br>
+                                <strong>Tools:</strong> Python, TensorFlow, OpenCV, EasyOCR, Flask, Raspberry Pi, Arduino
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
+    </div>
     </section>
-    
-    <!-- Blog Section -->
-    <section id="blog" class="section blog">
-        <div class="container">
-            <div class="section-content">
-                <div class="section-header">
-                    <h2 class="section-title">NOTES</h2>
-                </div>
-                
-                <div class="blog-grid">
-                    <div class="blog-card">
-                        <h3 class="blog-title">How I Think About Systems</h3>
-                        <p class="blog-excerpt">
-                            Exploring the principles of system design that guide my approach to building scalable, maintainable software architectures.
-                        </p>
-                        <div class="blog-date">Jan 2025</div>
-                    </div>
-                    
-                    <div class="blog-card">
-                        <h3 class="blog-title">Notes on Self-Attention</h3>
-                        <p class="blog-excerpt">
-                            Deep dive into attention mechanisms, their mathematical foundations, and practical implications for computer vision tasks.
-                        </p>
-                        <div class="blog-date">Dec 2024</div>
-                    </div>
-                    
-                    <div class="blog-card">
-                        <h3 class="blog-title">What Elegance Means in Code</h3>
-                        <p class="blog-excerpt">
-                            Thoughts on writing code that is not just functional, but beautiful, maintainable, and expressive of clear thinking.
-                        </p>
-                        <div class="blog-date">Nov 2024</div>
-                    </div>
-                    
-                    <div class="blog-card">
-                        <h3 class="blog-title">Building Intelligent Things</h3>
-                        <p class="blog-excerpt">
-                            Reflections on the intersection of artificial intelligence and practical engineering, and what it means to build systems that think.
-                        </p>
-                        <div class="blog-date">Oct 2024</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
+
+
     
     <!-- Contact Section -->
     <section id="contact" class="section contact">
@@ -1079,25 +321,27 @@
                     </form>
                     
                     <div class="contact-alt">
-                        <div class="contact-item" data-copy="arundd2004@gmail.com">
+                        <a class="contact-item" href="mailto:arundd2004@gmail.com" target="_blank" rel="noopener noreferrer">
                             <div class="contact-icon">@</div>
-                            <span class="contact-label">Email</span>
-                        </div>
-                        
-                        <div class="contact-item" data-copy="https://linkedin.com/in/arun-dasari">
+                            <span class="contact-label">Gmail</span>
+                        </a>
+
+                        <a class="contact-item" href="https://www.linkedin.com/in/dasari-durga-arunakumar-4b78841b6/" target="_blank" rel="noopener noreferrer">
                             <div class="contact-icon">in</div>
                             <span class="contact-label">LinkedIn</span>
-                        </div>
-                        
-                        <div class="contact-item" data-copy="https://github.com/arundd2004">
+                        </a>
+
+                        <a class="contact-item" href="https://github.com/ArunaK-netizen" target="_blank" rel="noopener noreferrer">
                             <div class="contact-icon">gh</div>
                             <span class="contact-label">GitHub</span>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
     
     <!-- Footer -->
     <footer class="footer">
@@ -1105,227 +349,6 @@
             <p class="footer-text">Designed and coded by Aruna Kumar — 2025</p>
         </div>
     </footer>
-    
-    <script>
-        // ================================================
-        // NOTHING.TECH INSPIRED PORTFOLIO INTERACTIONS
-        // ================================================
-        
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-        
-        function updateCursor() {
-            const dx = mouseX - cursorX;
-            const dy = mouseY - cursorY;
-            
-            cursorX += dx * 0.1;
-            cursorY += dy * 0.1;
-            
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            
-            requestAnimationFrame(updateCursor);
-        }
-        updateCursor();
-        
-        // Cursor hover effects
-        const body = document.body;
-        const hoverElements = document.querySelectorAll(
-        'body'
-        );
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-        
-        // Smooth Navigation
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Update active nav
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // Scroll Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.section-content').forEach(section => {
-            observer.observe(section);
-        });
-        
-        // Project Card Interactions
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-8px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
-        
-        // Blog Card Interactions
-        const blogCards = document.querySelectorAll('.blog-card');
-        blogCards.forEach(card => {
-            card.addEventListener('click', () => {
-                // Simulate blog post opening
-                alert('Blog post would open here');
-            });
-        });
-        
-        // Contact Form
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const submitBtn = contactForm.querySelector('.form-submit');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'SENDING...';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                submitBtn.textContent = 'SENT ✓';
-                contactForm.reset();
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
-            }, 1500);
-        });
-        
-        // Click to Copy Functionality
-        const contactItems = document.querySelectorAll('.contact-item[data-copy]');
-        contactItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const text = item.getAttribute('data-copy');
-                
-                navigator.clipboard.writeText(text).then(() => {
-                    const label = item.querySelector('.contact-label');
-                    const originalText = label.textContent;
-                    
-                    label.textContent = 'COPIED!';
-                    item.style.transform = 'translateY(-4px)';
-                    
-                    setTimeout(() => {
-                        label.textContent = originalText;
-                        item.style.transform = 'translateY(0)';
-                    }, 1000);
-                });
-            });
-        });
-        
-        // Glitch Effect on Hover
-        const glitchElement = document.querySelector('.glitch');
-        let glitchTimeout;
-        
-        glitchElement.addEventListener('mouseenter', () => {
-            glitchElement.style.animation = 'none';
-            clearTimeout(glitchTimeout);
-            
-            glitchTimeout = setTimeout(() => {
-                glitchElement.style.animation = '';
-            }, 100);
-        });
-        
-        // Parallax Effect for Hero
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const heroTitle = document.querySelector('.home-title');
-            
-            if (heroTitle) {
-                heroTitle.style.transform = `translateY(${scrollY * 0.1}px)`;
-            }
-        });
-        
-        // Active Navigation on Scroll
-        const sections = document.querySelectorAll('.section');
-        
-        window.addEventListener('scroll', () => {
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                
-                if (window.scrollY >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // Performance Optimization
-        let ticking = false;
-        
-        function updateOnScroll() {
-            // Batch scroll-based updates here
-            ticking = false;
-        }
-        
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateOnScroll);
-                ticking = true;
-            }
-        });
-        
-        // Initialize Animations
-        document.addEventListener('DOMContentLoaded', () => {
-            // Stagger animation for project cards
-            const cards = document.querySelectorAll('.project-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.classList.add('fade-in');
-            });
-            
-            // Initialize other animations
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 100);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
