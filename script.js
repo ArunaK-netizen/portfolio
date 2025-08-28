@@ -1,65 +1,86 @@
-// ================================================
-// NOTHING.TECH INSPIRED PORTFOLIO INTERACTIONS
-// ================================================
-
-// Custom Cursor
+// Cursor Movement
 const cursor = document.querySelector('.cursor');
-let mouseX = 0;
-let mouseY = 0;
-let cursorX = 0;
-let cursorY = 0;
+const cursorFollower = document.querySelector('.cursor-follower');
 
 document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    
+    setTimeout(() => {
+        cursorFollower.style.left = e.clientX + 'px';
+        cursorFollower.style.top = e.clientY + 'px';
+    }, 100);
 });
 
-function updateCursor() {
-    const dx = mouseX - cursorX;
-    const dy = mouseY - cursorY;
-    
-    cursorX += dx * 0.1;
-    cursorY += dy * 0.1;
-    
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
-    
-    requestAnimationFrame(updateCursor);
-}
-updateCursor();
-
-// Cursor hover effects
-const body = document.body;
-const hoverElements = document.querySelectorAll(
-'body'
-);
-hoverElements.forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+// Progress Bar
+window.addEventListener('scroll', () => {
+    const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('progress-bar').style.width = scrolled + '%';
 });
 
-// Smooth Navigation
+// Navigation
+const nav = document.getElementById('navbar');
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
+
+navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+});
+
+// Active Navigation Links
+const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-        
-        if (targetSection) {
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            // Update active nav
-            navLinks.forEach(l => l.classList.remove('active'));
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.pageYOffset >= (sectionTop - 200)) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').substring(1) === current) {
             link.classList.add('active');
         }
     });
 });
 
-// Scroll Animations
+// Counter Animation
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100;
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.ceil(current);
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.textContent = target;
+            }
+        };
+        
+        updateCounter();
+    });
+}
+
+// Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -68,231 +89,99 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add('animate');
+            
+            // Trigger counter animation for home stats
+            if (entry.target.classList.contains('home-stats')) {
+                animateCounters();
+            }
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.section-content').forEach(section => {
-    observer.observe(section);
+// Observe elements for animation
+document.querySelectorAll('.project-card, .timeline-item, .home-stats').forEach(el => {
+    observer.observe(el);
 });
 
-// Project Card Interactions
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-8px)';
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0)';
-    });
-});
-
-// Blog Card Interactions
-const blogCards = document.querySelectorAll('.blog-card');
-blogCards.forEach(card => {
-    card.addEventListener('click', () => {
-        // Simulate blog post opening
-        alert('Blog post would open here');
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        navMenu.classList.remove('active');
     });
 });
 
-// Contact Form
+// Form handling
 const contactForm = document.getElementById('contactForm');
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const submitBtn = contactForm.querySelector('.form-submit');
-    const originalText = submitBtn.textContent;
-    
-    submitBtn.textContent = 'SENDING...';
-    submitBtn.disabled = true;
-    
-    // Simulate form submission
-    setTimeout(() => {
-        submitBtn.textContent = 'SENT ✓';
-        contactForm.reset();
-        
-        setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    }, 1500);
+    // Add your form submission logic here
+    alert('Thanks for reaching out! I\'ll get back to you soon.');
+    contactForm.reset();
 });
 
-// Click to Copy Functionality
-const contactItems = document.querySelectorAll('.contact-item[data-copy]');
-contactItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const text = item.getAttribute('data-copy');
-        
-        navigator.clipboard.writeText(text).then(() => {
-            const label = item.querySelector('.contact-label');
-            const originalText = label.textContent;
-            
-            label.textContent = 'COPIED!';
-            item.style.transform = 'translateY(-4px)';
-            
-            setTimeout(() => {
-                label.textContent = originalText;
-                item.style.transform = 'translateY(0)';
-            }, 1000);
-        });
-    });
-});
+// Modal functionality
+const modal = document.getElementById('confidentialModal');
+const confidentialLinks = document.querySelectorAll('.project-link.confidential');
+const modalClose = document.querySelector('.modal-close');
 
-// Glitch Effect on Hover
-const glitchElement = document.querySelector('.glitch');
-let glitchTimeout;
-
-glitchElement.addEventListener('mouseenter', () => {
-    glitchElement.style.animation = 'none';
-    clearTimeout(glitchTimeout);
-    
-    glitchTimeout = setTimeout(() => {
-        glitchElement.style.animation = '';
-    }, 100);
-});
-
-// Parallax Effect for Hero
-window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const heroTitle = document.querySelector('.home-title');
-    
-    if (heroTitle) {
-        heroTitle.style.transform = `translateY(${scrollY * 0.1}px)`;
-    }
-});
-
-// Active Navigation on Scroll
-const sections = document.querySelectorAll('.section');
-
-window.addEventListener('scroll', () => {
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Performance Optimization
-let ticking = false;
-
-function updateOnScroll() {
-    // Batch scroll-based updates here
-    ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        requestAnimationFrame(updateOnScroll);
-        ticking = true;
-    }
-});
-
-// Initialize Animations
-document.addEventListener('DOMContentLoaded', () => {
-    // Stagger animation for project cards
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
-    });
-    
-    // Initialize other animations
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 100);
-});
-
-// ==============================================
-// CONFIDENTIAL MODAL FUNCTIONALITY
-// ==============================================
-
-// Wait for DOM to be loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Get modal element
-    const modal = document.getElementById('confidentialModal');
-    // Get close button
-    const closeButton = document.querySelector('.close-button');
-
-    // Function to open modal
-    function openModal() {
+confidentialLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
         modal.style.display = 'block';
-    }
+    });
+});
 
-    // Function to close modal
-    function closeModal() {
+modalClose.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
         modal.style.display = 'none';
     }
+});
 
-    // Close modal on clicking close button
-    closeButton.addEventListener('click', closeModal);
-
-    // Close modal on clicking outside modal content
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-
-    // Close modal on pressing Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.style.display === 'block') {
-            closeModal();
-        }
-    });
-
-    // Add event listeners to the two specific project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    const conceptAttentionCard = projectCards[0]; // First card
-    const vehicleEntryCard = projectCards[3]; // Fourth card
-
-    // Add click event listeners
-    conceptAttentionCard.addEventListener('click', function(e) {
-        // Prevent default link behavior
-        e.preventDefault();
-        openModal();
-    });
-
-    vehicleEntryCard.addEventListener('click', function(e) {
-        // Prevent default link behavior  
-        e.preventDefault();
-        openModal();
-    });
-
-    // Prevent the project links from working on these specific cards
-    const conceptAttentionLinks = conceptAttentionCard.querySelectorAll('.project-link');
-    const vehicleEntryLinks = vehicleEntryCard.querySelectorAll('.project-link');
-
-    conceptAttentionLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            openModal();
-        });
-    });
-
-    vehicleEntryLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            openModal();
-        });
+// Parallax effect for floating elements
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallax = document.querySelectorAll('.floating-element');
+    
+    parallax.forEach((element, index) => {
+        const speed = element.getAttribute('data-speed');
+        const yPos = -(scrolled * speed / 10);
+        element.style.transform = `translateY(${yPos}px)`;
     });
 });
 
+// Form input focus effects
+const formInputs = document.querySelectorAll('.form-input');
+formInputs.forEach(input => {
+    input.addEventListener('focus', () => {
+        input.parentElement.classList.add('focused');
+    });
+    
+    input.addEventListener('blur', () => {
+        if (input.value === '') {
+            input.parentElement.classList.remove('focused');
+        }
+    });
+});
 
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    // Add loading animation
+    document.body.classList.add('loaded');
+    
+    // Initialize AOS or other animation libraries if needed
+    console.log('Portfolio loaded successfully!');
+});
