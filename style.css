@@ -297,6 +297,11 @@ body {
     background: var(--text-primary);
 }
 
+.btn-secondary:hover {
+    color: black;
+    border-color: var(--border);
+}
+
 .btn-bg {
     position: absolute;
     top: 0;
