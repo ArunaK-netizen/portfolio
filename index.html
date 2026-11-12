@@ -20,7 +20,6 @@
   --pad:clamp(1.15rem,4vw,3.5rem);
   --ease:cubic-bezier(.2,.8,.2,1);
   box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -49,7 +48,7 @@ img,svg,canvas{max-width:100%;display:block}
 
 /* ---------- type ---------- */
 .d{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.84;letter-spacing:-.012em;margin:0}
-.d-xl{font-size:clamp(4.6rem,23.5vw,25rem)}
+.d-xl{font-size:clamp(3.5rem,min(18vw,21vh),20rem)}
 .d-l{font-size:clamp(3.4rem,13vw,13rem)}
 .d-m{font-size:clamp(2.6rem,7.2vw,7rem)}
 .d-s{font-size:clamp(1.9rem,3.6vw,3.2rem);line-height:.92}
@@ -93,29 +92,38 @@ img,svg,canvas{max-width:100%;display:block}
 @media (hover:none),(pointer:coarse){.cursor{display:none}}
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:6.5rem var(--pad) 1.6rem;overflow:hidden}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(4.2rem,7vh,5.4rem) var(--pad) calc(clamp(1rem,2vh,1.5rem) + env(safe-area-inset-bottom,0px));overflow:hidden}
 #gl{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .hero>*:not(#gl){position:relative;z-index:1}
-.hero-top{display:flex;justify-content:space-between;gap:2rem;align-items:flex-start;margin-bottom:auto;padding-top:clamp(.5rem,5vh,3rem)}
+.hero-top{display:flex;justify-content:space-between;gap:2rem;align-items:flex-start;padding-top:0}
 .hero-top .lede{max-width:27ch}
 .avail{display:inline-flex;align-items:center;gap:.6rem;font-weight:500;font-size:.95rem}
 .avail i{width:.6rem;height:.6rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:ping 2.2s infinite}
 @keyframes ping{70%{box-shadow:0 0 0 .7rem transparent}100%{box-shadow:0 0 0 0 transparent}}
-.name{margin:0}
+.name{margin:auto 0}
 .name .ln{display:block;overflow:hidden;padding-top:.06em;white-space:nowrap}
-.name .ln:nth-child(2){padding-left:11vw;color:var(--hl)}
+.name .ln:nth-child(2){padding-left:clamp(1.5rem,9vw,8rem);color:var(--hl)}
 .name .ch{display:inline-block;will-change:transform}
-.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:1rem;margin-top:1.2rem}
-.hero-foot p{margin:0}
-.hex{font-family:var(--mono);font-size:.86rem;white-space:nowrap}
-.scrollcue{display:inline-flex;align-items:center;gap:.7rem;font-weight:500;font-size:.95rem}
-.scrollcue span{display:block;width:1px;height:2.6rem;background:var(--ink);transform-origin:top;animation:cue 2s var(--ease) infinite}
+.hero-foot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;border-top:1px solid var(--line);padding-top:clamp(.75rem,1.8vh,1.15rem);margin-top:clamp(.8rem,2vh,1.4rem)}
+.hero-foot p{margin:0;line-height:1.35}
+.hero-foot-bio{justify-self:start;font-size:.95rem}
+.hero-foot-bio strong{display:block;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.hero-foot-bio span{display:block;color:var(--muted);font-size:.88rem}
+.hero-foot .hex{justify-self:center;text-align:center;font-family:var(--mono);font-size:.86rem;white-space:nowrap}
+.hero-foot .scrollcue{justify-self:end;display:inline-flex;align-items:center;gap:.7rem;font-weight:500;font-size:.92rem;white-space:nowrap}
+.hero-foot .scrollcue span{display:block;width:1px;height:clamp(1.8rem,3.2vh,2.4rem);background:var(--ink);transform-origin:top;animation:cue 2s var(--ease) infinite}
+@media (max-width:720px){
+  .hero-foot{grid-template-columns:1fr auto;grid-template-areas:"bio cue" "hex cue";gap:.4rem 1rem;align-items:center}
+  .hero-foot-bio{grid-area:bio}
+  .hero-foot .hex{grid-area:hex;justify-self:start;text-align:left}
+  .hero-foot .scrollcue{grid-area:cue;justify-self:end}
+}
 @keyframes cue{0%{transform:scaleY(0)}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
 /* ---------- statement ---------- */
-.statement{padding:clamp(5rem,14vh,11rem) var(--pad)}
-.statement h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(2.3rem,6.6vw,7.4rem);line-height:.92;letter-spacing:-.01em;margin:0;max-width:17ch}
-.statement .w{display:inline-block}
+.statement{padding:clamp(5rem,13vh,10rem) var(--pad)}
+.statement h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(2.3rem,6.4vw,7rem);line-height:.92;letter-spacing:-.01em;margin:0;max-width:18ch}
+.statement .w{display:inline-block;will-change:opacity}
 .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.2rem,3vw,3rem);margin-top:clamp(3rem,8vh,6rem);border-top:1px solid var(--line);padding-top:1.6rem}
 .facts p{margin:.35rem 0 0;color:var(--muted);max-width:30ch}
 .facts strong{font-family:var(--display);font-weight:900;font-size:clamp(2rem,3.6vw,3.4rem);line-height:.9;text-transform:uppercase;display:block}
@@ -383,14 +391,14 @@ html.motion .belt span{padding-right:0}
     <p class="avail"><i></i>Available for software engineering roles</p>
     <p class="lede">Software engineer working across full-stack development and machine learning.</p>
   </div>
-  <h1 class="name d d-xl" data-fit="30" aria-label="Dasari Durga Arunakumar">
+  <h1 class="name d d-xl" data-fit="21" aria-label="Dasari Durga Arunakumar">
     <span class="ln" aria-hidden="true" data-split>Aruna</span>
     <span class="ln" aria-hidden="true" data-split>Kumar</span>
   </h1>
   <p class="hero-lede">Software engineer working across full-stack development and machine learning. Computer Science graduate from VIT Chennai.</p>
   <div class="hero-foot">
-    <p><strong>Dasari Durga Arunakumar</strong><br>Full-stack and AI/ML engineer</p>
-    <p class="hex" data-hex="Chennai, India" title="Chennai, written in hexadecimal">43 68 65 6E 6E 61 69</p>
+    <p class="hero-foot-bio"><strong>Dasari Durga Arunakumar</strong><span>Full-stack and AI/ML engineer</span></p>
+    <p class="hex" data-hex="Chennai, India" title="Chennai, written in hexadecimal">43 68 65 6E 6E 61 69 2C 20 49 6E 64 69 61</p>
     <p class="scrollcue"><span></span>Scroll</p>
   </div>
 </section>
@@ -912,10 +920,33 @@ html.motion .belt span{padding-right:0}
 
     /* ----- statement: words light up as you scroll ----- */
     var words = splitWords($("[data-words]"));
-    gsap.fromTo(words, { opacity: .14 }, { opacity: 1, ease: "none", stagger: .5,
-      scrollTrigger: { trigger: ".statement", start: "top 72%", end: "top 8%", scrub: true } });
-    gsap.from(".facts > div", { y: 40, autoAlpha: 0, duration: 1, ease: EASE, stagger: .1,
-      scrollTrigger: { trigger: ".facts", start: "top 85%" } });
+    if(CALM){
+      gsap.set(words, { opacity: 1 });
+    } else {
+      gsap.fromTo(words,
+        { opacity: 0.16 },
+        {
+          opacity: 1,
+          duration: 0.6,
+          ease: "power1.out",
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: "[data-words]",
+            start: "top 82%",
+            end: "bottom 20%",
+            scrub: 0.8
+          }
+        }
+      );
+    }
+    gsap.from(".facts > div", {
+      y: 35,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: EASE,
+      stagger: 0.1,
+      scrollTrigger: { trigger: ".facts", start: "top 85%" }
+    });
 
     /* ----- headings that rise out of a mask ----- */
     $$("[data-rise]").forEach(function(h){
