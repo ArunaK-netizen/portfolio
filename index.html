@@ -336,20 +336,21 @@ html.motion .belt span{padding-right:0}
 @media (min-width:900px){.ints{grid-template-columns:repeat(3,1fr)}.ints>div{border-bottom:0}}
 
 /* ---------- contact ---------- */
-.contact{background:var(--accent);color:var(--on-accent);padding:clamp(4rem,11vh,8rem) var(--pad) 2rem;position:relative;overflow:hidden}
-.contact .d-xl{line-height:.8}
+.contact{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;background:var(--accent);color:var(--on-accent);padding:clamp(2.5rem,4.2vh,3.8rem) var(--pad) calc(clamp(.8rem,1.8vh,1.4rem) + env(safe-area-inset-bottom,0px));position:relative;overflow:hidden;box-sizing:border-box}
+.contact .d-xl{line-height:.8;font-size:clamp(3.6rem,min(18vw,27vh),16rem)}
 .contact .ln{display:block;overflow:hidden;white-space:nowrap}
-.contact .ln:nth-child(2){padding-left:9vw}
+.contact .ln:nth-child(2){padding-left:clamp(2rem,9vw,8rem)}
 .contact .ch{display:inline-block}
-.c-grid{display:grid;gap:2rem;margin-top:clamp(2.5rem,7vh,5rem);align-items:end}
-@media (min-width:900px){.c-grid{grid-template-columns:1.2fr 1fr}}
-.mail{font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,4.6vw,4.4rem);text-transform:uppercase;line-height:1;text-decoration:none;display:inline-block;border-bottom:4px solid currentColor;padding-bottom:.08em;word-break:break-all}
+.c-grid{display:grid;gap:clamp(1rem,2vw,2rem);margin-top:clamp(.8rem,2vh,1.8rem);align-items:end}
+@media (min-width:900px){.c-grid{grid-template-columns:1.35fr 1fr}}
+.c-grid .lede{margin:0 0 .45rem;font-size:clamp(.95rem,1.25vw,1.18rem);line-height:1.35;max-width:40ch}
+.mail{font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,3.6vw,3.4rem);text-transform:uppercase;line-height:1;text-decoration:none;display:inline-block;border-bottom:3px solid currentColor;padding-bottom:.08em;word-break:break-all}
 .c-links{display:flex;flex-wrap:wrap;gap:.6rem}
 .contact .btn{background:var(--asphalt);color:var(--chalk)}
 .contact .btn:hover{background:var(--chalk);color:var(--asphalt)}
 .contact .btn.ghost{background:transparent;color:var(--asphalt);border-color:var(--asphalt)}
 .contact .btn.ghost:hover{background:var(--asphalt);color:var(--chalk)}
-.foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:clamp(3rem,8vh,5rem);border-top:1px solid rgba(23,24,26,.3);padding-top:1rem;font-size:.9rem}
+.foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:clamp(.8rem,2vh,2rem);border-top:1px solid rgba(23,24,26,.3);padding-top:clamp(.6rem,1.2vh,.9rem);font-size:.9rem}
 .foot p{margin:0}
 
 @media (prefers-reduced-motion: reduce){
@@ -571,6 +572,17 @@ html.motion .belt span{padding-right:0}
         </ul>
       </div>
     </article>
+    <article class="job">
+      <div><p class="when">May 2024 to Jun 2024</p><h3>IGCAR</h3></div>
+      <div>
+        <p class="role">Machine Learning Intern, Indira Gandhi Centre for Atomic Research. Kalpakkam.</p>
+        <ul>
+          <li>Led the development of a vehicle entry automation system using deep learning-based license plate recognition and RFID authentication, enhancing security and efficiency.</li>
+          <li>Built a robust CNN-OCR pipeline for accurate license plate detection under varying conditions, integrated with TinyDB for lightweight and efficient local data storage.</li>
+          <li>Boosted real-time performance using multiprocessing and designed a Tkinter GUI for smooth manual entries and live display of employee/vehicle data.</li>
+        </ul>
+      </div>
+    </article>
   </div>
 
   <div class="oss">
@@ -639,7 +651,7 @@ html.motion .belt span{padding-right:0}
   <ul class="certs">
     <li><h4>Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</h4><p>Oracle</p><a href="https://drive.google.com/file/d/1cv69dnpObNYKYD_t-Z0VE56LCYtUbArC/view?usp=sharing" target="_blank" rel="noopener">View certificate</a></li>
     <li><h4>Oracle Cloud Infrastructure 2025 Certified Foundations Associate</h4><p>Oracle</p><a href="https://drive.google.com/file/d/1JXG2KtRR8xygc9SEIc-Cj5PhDqinVjUe/view?usp=sharing" target="_blank" rel="noopener">View certificate</a></li>
-    <li><h4>Alteryx Designer Core</h4><p>Alteryx</p><span></span></li>
+    <li><h4>Alteryx Designer Core</h4><p>Alteryx</p><a href="https://drive.google.com/file/d/1FJJa1nNBD1wCAxZiRj41ezhC6NmJ1k0r/view?usp=sharing" target="_blank" rel="noopener">View certificate</a></li>
   </ul>
 </section>
 
@@ -657,7 +669,7 @@ html.motion .belt span{padding-right:0}
 
 <div class="hazard" aria-hidden="true"></div>
 <section class="contact" id="contact" aria-label="Contact">
-  <h2 class="d d-xl" data-fit="32" aria-label="Get in touch">
+  <h2 class="d d-xl" data-fit="27" aria-label="Get in touch">
     <span class="ln" aria-hidden="true" data-split>Get in</span>
     <span class="ln" aria-hidden="true" data-split>touch</span>
   </h2>
@@ -1004,14 +1016,21 @@ html.motion .belt span{padding-right:0}
       tw.totalTime(46 * 200); // room to run backwards when you scroll up
       return tw;
     });
-    var vel = { v: 1 }, settle = gsap.quickTo(vel, "v", { duration: .9, ease: "power3.out" });
+    var vel = { v: 1 }, isJumping = false;
+    var settle = gsap.quickTo(vel, "v", { duration: .6, ease: "power2.out" });
     if(belts.length) ScrollTrigger.create({ trigger: ".stack", start: "top bottom", end: "bottom top",
       onUpdate: function(self){
-        var s = gsap.utils.clamp(-9, 9, self.getVelocity() / 260);
+        if(isJumping) return;
+        var s = gsap.utils.clamp(-3.2, 3.2, self.getVelocity() / 320);
         settle(Math.abs(s) < 1 ? (s < 0 ? -1 : 1) : s);
       },
       onToggle: function(self){ belts.forEach(function(t){ self.isActive ? t.play() : t.pause(); }); } });
-    if(belts.length) gsap.ticker.add(function(){ belts.forEach(function(t){ t.timeScale(vel.v); }); });
+    if(belts.length) gsap.ticker.add(function(){
+      // smoothly decay back to baseline 1x / -1x if scrolling stopped
+      var base = vel.v < 0 ? -1 : 1;
+      vel.v += (base - vel.v) * 0.05;
+      belts.forEach(function(t){ t.timeScale(vel.v); });
+    });
     if(CALM) gsap.from(".srow", { y: 24, autoAlpha: 0, duration: .9, ease: EASE, stagger: .07, scrollTrigger: { trigger: ".stack", start: "top 75%" } });
 
     /* ----- list + definition rows ----- */
@@ -1041,13 +1060,16 @@ html.motion .belt span{padding-right:0}
         if(!target || a.classList.contains("sr")) return;
         e.preventDefault();
         if(busy) return; busy = true;
-        gsap.timeline({ onComplete: function(){ busy = false; } })
+        isJumping = true; vel.v = 1;
+        gsap.timeline({ onComplete: function(){ busy = false; setTimeout(function(){ isJumping = false; vel.v = 1; }, 120); } })
           .set(wipe, { transformOrigin: "bottom" })
           .to(wipe, { scaleY: 1, duration: .5, ease: "expo.inOut" })
           .add(function(){
             var y = id === "#top" ? 0 : target.getBoundingClientRect().top + window.pageYOffset;
+            vel.v = 1;
             if(lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y);
             ScrollTrigger.update();
+            vel.v = 1;
             if(history.replaceState) history.replaceState(null, "", id === "#top" ? location.pathname + location.search : id);
           })
           .set(wipe, { transformOrigin: "top" })
