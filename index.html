@@ -358,6 +358,33 @@ html.motion .belt span{padding-right:0}
   .wave path{stroke-dashoffset:0}.flag,.box,.ocr span{opacity:1;transform:none}.bars i{transform:none}
 }
 
+/* ---------- depth layer (all created by JS, only when motion runs) ---------- */
+.hud{position:fixed;right:.55rem;top:50%;transform:translateY(-50%);z-index:40;writing-mode:vertical-rl;display:flex;gap:1.4rem;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:#F1EDE4;mix-blend-mode:difference;pointer-events:none;opacity:0;font-variant-numeric:tabular-nums}
+@media (max-width:899px){.hud{display:none}}
+.statement{position:relative;overflow:hidden;overflow:clip}
+.statement h2,.statement .facts{position:relative;z-index:1}
+.debris{position:absolute;z-index:0;font-family:var(--mono);font-size:.78rem;color:var(--muted);opacity:.6;white-space:nowrap;pointer-events:none;will-change:transform}
+@media (min-width:900px){.st-top.has-watch{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(1rem,2vw,2.5rem);align-items:start}}
+.watch{position:relative;align-self:center;z-index:0;width:min(clamp(19rem,33vw,34rem),calc((100svh - 100px)*.8));aspect-ratio:4/5;pointer-events:none;margin-right:calc(-1*clamp(0rem,1.5vw,2rem))}
+.watch canvas{width:100%;height:100%}
+@media (max-width:899px){.debris,.watch{display:none}}
+.job{isolation:isolate}
+.job .ghost{position:absolute;right:0;top:-.08em;z-index:-1;font-family:var(--display);font-weight:900;font-size:clamp(6rem,16vw,16rem);line-height:.8;
+  color:transparent;-webkit-text-stroke:1.5px var(--line);pointer-events:none;user-select:none;will-change:transform}
+html.motion .viz{will-change:transform}
+html.motion .belt span{transition:color .25s,-webkit-text-stroke-color .25s}
+html.motion .belt span:hover{color:var(--hl);-webkit-text-stroke-color:var(--hl)}
+.peek{position:fixed;left:0;top:0;z-index:70;width:clamp(15rem,22vw,20rem);aspect-ratio:4/3;margin:-9.5rem 0 0 1.6rem;background:var(--accent);color:var(--asphalt);
+  border:2px solid var(--asphalt);pointer-events:none;overflow:hidden;opacity:0}
+.peek svg{position:absolute;inset:0;width:100%;height:100%}
+.peek svg *{fill:none;stroke:var(--asphalt);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.peek svg .f{fill:var(--asphalt);stroke:none}
+.peek b{position:absolute;left:.8rem;top:.45rem;font-family:var(--display);font-weight:900;font-size:2.4rem;line-height:1}
+.peek span{position:absolute;right:.8rem;bottom:.6rem;font-family:var(--mono);font-size:.68rem}
+.contact .ch{transition:color .25s}
+.contact .ch.hot{color:var(--chalk)}
+
 .panel .d-m{font-size:clamp(2.6rem,6vw,6rem)}
 
 .hero-lede{display:none}
@@ -694,6 +721,7 @@ html.motion .belt span{padding-right:0}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 (function(){
   "use strict";
@@ -925,6 +953,8 @@ html.motion .belt span{padding-right:0}
       .to(".name .ln:nth-child(1)", { xPercent: CALM ? 0 : -9, ease: "none" }, 0)
       .to(".name .ln:nth-child(2)", { xPercent: CALM ? 0 : 9, ease: "none" }, 0)
       .to(".hero-top", { yPercent: -40, autoAlpha: 0, ease: "none" }, 0)
+      .to(".name", { yPercent: CALM ? 0 : 24, ease: "none" }, 0)
+      .to(".hero-foot", { y: CALM ? 0 : 60, autoAlpha: 0, ease: "none" }, 0)
       .to(gl.state, { amp: 2.6, lift: 1, ease: "none" }, 0);
 
     /* ----- progress lane ----- */
@@ -1097,12 +1127,328 @@ html.motion .belt span{padding-right:0}
       });
     }
 
+    if(!CALM) depth(gl);
+
     window.addEventListener("load", function(){ ScrollTrigger.refresh(); });
+  }
+
+  /* ================= depth: everything that moves at its own speed ================= */
+  function depth(gl){
+    /* ----- statement: a speed-breaker sign and sensor readouts drifting behind the text ----- */
+    var st = $(".statement");
+    initWatch(st);
+    [["ax +0.42 g", 62, 9, .7], ["gz −1.31 °/s", 84, 44, 1.7], ["13.0827° N", 60, 50, 1.1], ["80.2707° E", 74, 60, 2.1],
+     ["p(pothole) = 0.94", 78, 2, 1.5], ["A5 5A 00 28", 86, 20, .9], ["CRC32 OK", 80, 66, 1.3]].forEach(function(d){
+      var s = doc.createElement("span");
+      s.className = "debris"; s.setAttribute("aria-hidden", "true"); s.textContent = d[0];
+      s.style.left = d[1] + "%"; s.style.top = d[2] + "%";
+      st.insertBefore(s, st.firstChild);
+      gsap.fromTo(s, { y: 150 * d[3] }, { y: -150 * d[3], ease: "none",
+        scrollTrigger: { trigger: st, start: "top bottom", end: "bottom top", scrub: true } });
+    });
+
+    /* ----- experience: the year, huge and outlined, sliding behind each role ----- */
+    $$(".job").forEach(function(j){
+      var m = ($(".when", j).textContent.match(/\d{4}/g) || []).pop(); if(!m) return;
+      var g = doc.createElement("span");
+      g.className = "ghost"; g.setAttribute("aria-hidden", "true"); g.textContent = m;
+      j.appendChild(g);
+      gsap.fromTo(g, { yPercent: 28 }, { yPercent: -28, ease: "none",
+        scrollTrigger: { trigger: j, start: "top bottom", end: "bottom top", scrub: true } });
+    });
+
+    /* ----- hazard stripes slide as you cross them ----- */
+    $$("main > .hazard").forEach(function(h){
+      gsap.fromTo(h, { backgroundPositionX: "0px" }, { backgroundPositionX: "-306px", ease: "none",
+        scrollTrigger: { trigger: h, start: "top bottom", end: "bottom top", scrub: true } });
+    });
+
+    /* ----- contact: uncovered from underneath instead of scrolling in ----- */
+    gsap.fromTo(".contact > *", { y: function(){ return -window.innerHeight * .42; } }, { y: 0, ease: "none",
+      scrollTrigger: { trigger: ".contact", start: "top bottom", end: "top top", scrub: true, invalidateOnRefresh: true } });
+
+    /* ----- odometer: scroll distance and speed, and type that leans into the speed ----- */
+    var hud = doc.createElement("div");
+    hud.className = "hud"; hud.setAttribute("aria-hidden", "true");
+    hud.innerHTML = "<span>ODO 0000 M</span><span>000 KM/H</span>";
+    doc.body.appendChild(hud);
+    gsap.to(hud, { opacity: 1, duration: 1, delay: 2.6 });
+    var odoEl = hud.children[0], spdEl = hud.children[1];
+    function pad(n, l){ n = String(n); while(n.length < l) n = "0" + n; return n; }
+    var leaners = $$("[data-rise] > span, .job h3, .blist h3");
+    var lean = gsap.quickSetter(leaners, "skewX", "deg");
+    var lastY = window.pageYOffset, v = 0, lastLean = 0, lastOdo = "", lastSpd = "";
+    gsap.ticker.add(function(time, dt){
+      var y = window.pageYOffset;
+      var raw = gsap.utils.clamp(-6000, 6000, (y - lastY) / Math.max(dt, 1) * 1000);
+      lastY = y;
+      v += (raw - v) * .1;
+      if(Math.abs(v) < .5) v = 0;
+      gl.state.travel = y * .006;
+      var o = "ODO " + pad(Math.round(y / 100), 4) + " M", s = pad(Math.round(Math.abs(v) / 100 * 3.6), 3) + " KM/H";
+      if(o !== lastOdo) odoEl.textContent = lastOdo = o;
+      if(s !== lastSpd) spdEl.textContent = lastSpd = s;
+      var k = gsap.utils.clamp(-7, 7, -v / 420);
+      if(Math.abs(k - lastLean) > .02){ lean(k); lastLean = k; }
+    });
+
+    /* ----- skills: each row unfolds toward you like a split-flap board ----- */
+    $$(".srow").forEach(function(r){
+      gsap.fromTo(r, { rotationX: -72, autoAlpha: .12, transformPerspective: 1100, transformOrigin: "50% 0%" },
+        { rotationX: 0, autoAlpha: 1, ease: "none", scrollTrigger: { trigger: r, start: "top 98%", end: "top 60%", scrub: .5 } });
+    });
+
+    /* ----- education: the scores count up ----- */
+    $$(".score b, .schools strong").forEach(function(el){
+      var txt = el.textContent, m = txt.match(/[\d.]+/); if(!m) return;
+      var end = parseFloat(m[0]), dec = (m[0].split(".")[1] || "").length, suf = txt.replace(m[0], ""), o = { v: 0 };
+      gsap.to(o, { v: end, duration: 1.8, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        onUpdate: function(){ el.textContent = o.v.toFixed(dec) + suf; }, onComplete: function(){ el.textContent = txt; } });
+    });
+
+    /* ----- interests: three columns arriving from three depths ----- */
+    gsap.matchMedia().add("(min-width: 900px)", function(){
+      $$(".ints > div").forEach(function(c, i){
+        gsap.fromTo(c, { yPercent: 30 + i * 70 }, { yPercent: 0, ease: "none",
+          scrollTrigger: { trigger: ".ints", start: "top bottom", end: "top 40%", scrub: .4 } });
+      });
+    });
+
+    /* ----- contact: the address decrypts, like a frame coming off the watch ----- */
+    var mail = $(".mail"), mailText = mail.textContent, HEX = "0123456789ABCDEF", scrambling = false;
+    function scramble(){
+      if(scrambling) return; scrambling = true;
+      var o = { n: 0 };
+      gsap.to(o, { n: mailText.length, duration: 1, ease: "none",
+        onUpdate: function(){
+          var k = o.n | 0, out = mailText.slice(0, k);
+          for(var i = k; i < mailText.length; i++) out += HEX[Math.random() * 16 | 0];
+          mail.textContent = out;
+        },
+        onComplete: function(){ mail.textContent = mailText; scrambling = false; } });
+    }
+    ScrollTrigger.create({ trigger: mail, start: "top 92%", onEnter: scramble });
+
+    if(!fine) return;
+    mail.addEventListener("pointerenter", scramble);
+
+    /* ----- more projects: a card with each project's own drawing follows the pointer ----- */
+    var GLYPHS = [
+      '<path d="M20 108 H75 Q100 56 125 108 H180"/><rect x="62" y="46" width="76" height="74" stroke-dasharray="7 7"/>',
+      '<path d="M40 28 H160 V124 H40Z M80 28 V124 M120 28 V124 M40 60 H160 M40 92 H160"/><path class="f" d="M62 78 C62 44 108 36 132 58 C156 80 138 116 104 114 C76 112 62 106 62 78Z" opacity=".85"/>',
+      '<path d="M30 30 H170 V122 H30Z M65 30 V122 M100 30 V122 M135 30 V122 M30 53 H170 M30 76 H170 M30 99 H170"/><rect class="f" x="65" y="53" width="35" height="23"/><rect class="f" x="135" y="30" width="35" height="23"/><rect class="f" x="30" y="99" width="35" height="23"/><rect class="f" x="100" y="76" width="35" height="23"/>',
+      '<path d="M30 68 V82 M46 58 V92 M62 44 V106 M78 62 V88 M94 30 V120 M110 50 V100 M126 38 V112 M142 60 V90 M158 52 V98 M174 68 V82"/>',
+      '<rect x="34" y="30" width="132" height="44" rx="12"/><rect x="34" y="84" width="60" height="40" rx="12"/><rect x="106" y="84" width="60" height="40" rx="12"/><circle class="f" cx="58" cy="52" r="10"/><path d="M82 46 H146 M82 58 H124"/>'
+    ];
+    var peek = doc.createElement("div");
+    peek.className = "peek"; peek.setAttribute("aria-hidden", "true");
+    peek.innerHTML = '<svg viewBox="0 0 200 150"></svg><b></b><span></span>';
+    doc.body.appendChild(peek);
+    gsap.set(peek, { scale: .6 });
+    var px = gsap.quickTo(peek, "x", { duration: .5, ease: "power3" }), py = gsap.quickTo(peek, "y", { duration: .5, ease: "power3" });
+    var prot = gsap.quickTo(peek, "rotation", { duration: .5, ease: "power3" }), lastPX = 0, restT = 0;
+    var list = $(".blist");
+    $$("li", list).forEach(function(li, i){
+      li.addEventListener("pointerenter", function(){
+        peek.firstChild.innerHTML = GLYPHS[i % GLYPHS.length];
+        peek.children[1].textContent = "0" + (i + 1);
+        peek.children[2].textContent = ($(".tag", li) || {}).textContent || "";
+        gsap.fromTo(peek.firstChild, { scale: 1.25 }, { scale: 1, duration: .6, ease: "power3.out", transformOrigin: "50% 50%" });
+      });
+    });
+    list.addEventListener("pointerenter", function(){ gsap.to(peek, { opacity: 1, scale: 1, duration: .45, ease: "back.out(1.7)", overwrite: "auto" }); });
+    list.addEventListener("pointerleave", function(){ gsap.to(peek, { opacity: 0, scale: .6, duration: .3, ease: "power2.in", overwrite: "auto" }); });
+    list.addEventListener("pointermove", function(e){
+      var x = Math.min(e.clientX, window.innerWidth - peek.offsetWidth - 48);
+      px(x); py(Math.max(e.clientY, peek.offsetHeight + 12));
+      prot(gsap.utils.clamp(-12, 12, (e.clientX - lastPX) * .9)); lastPX = e.clientX;
+      clearTimeout(restT); restT = setTimeout(function(){ prot(0); }, 90);
+    }, { passive: true });
+
+    /* ----- contact: the big letters press down under the pointer, like keys ----- */
+    var keys = $$(".contact .ch").map(function(c){
+      gsap.set(c, { transformOrigin: "50% 100%" });
+      return { el: c, s: gsap.quickTo(c, "scaleY", { duration: .5, ease: "elastic.out(1,.5)" }) };
+    });
+    var contact = $(".contact");
+    contact.addEventListener("pointermove", function(e){
+      keys.forEach(function(k){
+        var r = k.el.getBoundingClientRect();
+        var d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+        var f = Math.max(0, 1 - d / 240);
+        k.s(1 - f * .24); k.el.classList.toggle("hot", f > .45);
+      });
+    }, { passive: true });
+    contact.addEventListener("pointerleave", function(){ keys.forEach(function(k){ k.s(1); k.el.classList.remove("hot"); }); });
+
+    /* ----- hero: the two name lines sit at different depths under the pointer ----- */
+    var hero = $(".hero"), lines = $$(".name .ln");
+    var movers = lines.map(function(l, i){
+      var f = i ? -30 : 18;
+      return { f: f, x: gsap.quickTo(l, "x", { duration: .9, ease: "power3" }), y: gsap.quickTo(l, "y", { duration: .9, ease: "power3" }) };
+    });
+    hero.addEventListener("pointermove", function(e){
+      var r = hero.getBoundingClientRect();
+      var nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+      movers.forEach(function(m){ m.x(nx * m.f); m.y(ny * m.f * .6); });
+    }, { passive: true });
+    hero.addEventListener("pointerleave", function(){ movers.forEach(function(m){ m.x(0); m.y(0); }); });
+
+    /* ----- project visuals tilt toward the pointer, with their parts on separate planes ----- */
+    $$(".viz").forEach(function(vz){
+      gsap.set(vz, { transformPerspective: 900 });
+      var rx = gsap.quickTo(vz, "rotationX", { duration: .7, ease: "power3" }), ry = gsap.quickTo(vz, "rotationY", { duration: .7, ease: "power3" });
+      var layers = [[".pos-phone", 26], [".pos-dash", -14], [".wave svg", -16], [".bytes", 20], [".legend", -10], [".plate-wrap", 26], [".ocr", -14], [".deck", 22], [".viz-cap", -8]]
+        .map(function(d){
+          var el = $(d[0], vz); if(!el) return null;
+          return { f: d[1], x: gsap.quickTo(el, "x", { duration: .8, ease: "power3" }), y: gsap.quickTo(el, "y", { duration: .8, ease: "power3" }) };
+        }).filter(Boolean);
+      vz.addEventListener("pointermove", function(e){
+        var r = vz.getBoundingClientRect();
+        var nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+        ry(nx * 9); rx(-ny * 7);
+        layers.forEach(function(l){ l.x(nx * l.f); l.y(ny * l.f); });
+      }, { passive: true });
+      vz.addEventListener("pointerleave", function(){ rx(0); ry(0); layers.forEach(function(l){ l.x(0); l.y(0); }); });
+    });
+  }
+
+  /* ================= WebGL: the CMF Watch Pro 2, turning as you scroll ================= */
+  function initWatch(section){
+    var THREE = window.THREE;
+    if(!THREE || !THREE.GLTFLoader || !window.matchMedia("(min-width: 900px)").matches) return;
+    var wrap = doc.createElement("div");
+    wrap.className = "watch"; wrap.setAttribute("aria-hidden", "true");
+    var canvas = doc.createElement("canvas"); wrap.appendChild(canvas);
+    // the watch sits in its own column beside the statement and scrolls with it like any other content; only the turn is animated
+    var h2 = $("h2", section), top = doc.createElement("div");
+    top.className = "st-top has-watch"; section.insertBefore(top, h2); top.appendChild(h2); top.appendChild(wrap);
+    function drop(){ wrap.remove(); top.classList.remove("has-watch"); }
+    var renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true }); }
+    catch(e){ drop(); return; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    var scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(26, 4 / 5, 10, 2000);
+    cam.position.set(0, 0, 335);
+
+    // a small studio to reflect: three softboxes and a warm kicker, baked into an environment map
+    (function(){
+      var env = new THREE.Scene();
+      env.add(new THREE.Mesh(new THREE.SphereGeometry(50, 24, 12), new THREE.MeshBasicMaterial({ color: 0x0b0c0e, side: THREE.BackSide })));
+      function box(w, h, x, y, z, c){
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide }));
+        m.position.set(x, y, z); m.lookAt(0, 0, 0); env.add(m);
+      }
+      box(30, 44, -26, 16, 22, 0xffffff); box(20, 50, 30, 6, 12, 0xdfe6ff); box(60, 14, 0, 34, -6, 0xffffff);
+      box(16, 16, 12, -24, 26, 0xffc400); box(50, 30, 0, -4, -38, 0x55585e);
+      var pm = new THREE.PMREMGenerator(renderer);
+      scene.environment = pm.fromScene(env, .03).texture; pm.dispose();
+    })();
+    var key = new THREE.DirectionalLight(0xffffff, 1.1); key.position.set(-120, 160, 220); scene.add(key);
+    scene.add(new THREE.AmbientLight(0xffffff, .18));
+
+    // the screen is a live canvas: the time, plus the readings the client decodes over Bluetooth
+    var face = doc.createElement("canvas"); face.width = face.height = 512;
+    var fx = face.getContext("2d"), faceTex = new THREE.CanvasTexture(face);
+    faceTex.flipY = false; faceTex.encoding = THREE.sRGBEncoding; faceTex.anisotropy = 4;
+    var bpm = 72, steps0 = 6240;
+    function drawFace(){
+      var now = new Date(), hh = ("0" + now.getHours()).slice(-2), mm = ("0" + now.getMinutes()).slice(-2);
+      var steps = steps0 + Math.round(window.pageYOffset / 6), goal = Math.min(1, steps / 10000);
+      fx.fillStyle = "#050506"; fx.fillRect(0, 0, 512, 512);
+      fx.lineCap = "round"; fx.lineWidth = 14;
+      fx.strokeStyle = "#1d1f22"; fx.beginPath(); fx.arc(256, 256, 226, 0, Math.PI * 2); fx.stroke();
+      fx.strokeStyle = "#FFC400"; fx.beginPath(); fx.arc(256, 256, 226, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * goal); fx.stroke();
+      fx.textAlign = "center"; fx.textBaseline = "alphabetic";
+      fx.fillStyle = "#8d8f93"; fx.font = '500 22px "JetBrains Mono", monospace';
+      fx.fillText(now.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" }).toUpperCase(), 256, 132);
+      fx.fillStyle = "#F1EDE4"; fx.font = '900 168px "Big Shoulders Display", Impact, sans-serif';
+      fx.fillText(hh + ":" + mm, 256, 300);
+      fx.font = '500 24px "JetBrains Mono", monospace';
+      fx.fillStyle = "#FFC400"; fx.fillText(steps.toLocaleString("en-IN") + " STEPS", 256, 356);
+      fx.fillStyle = "#FF4A3D"; fx.beginPath(); fx.arc(196, 396, 6 + (now.getSeconds() % 2) * 2, 0, Math.PI * 2); fx.fill();
+      fx.fillStyle = "#F1EDE4"; fx.fillText(bpm + " BPM", 268, 405);
+      fx.fillStyle = "#5f6165"; fx.font = '500 16px "JetBrains Mono", monospace';
+      fx.fillText("BLE · AES-128", 256, 446);
+      faceTex.needsUpdate = true;
+    }
+    drawFace();
+    setInterval(function(){ bpm = 68 + Math.round(Math.random() * 9); if(visible) drawFace(); }, 1000);
+    if(doc.fonts && doc.fonts.ready) doc.fonts.ready.then(drawFace);
+
+    var metal = new THREE.MeshStandardMaterial({ color: 0xb4b7bc, metalness: 1, roughness: .26 });
+    var MATS = {
+      bezel: metal, buckle: metal, crown: metal,
+      base: new THREE.MeshStandardMaterial({ color: 0x2a2c30, metalness: .7, roughness: .42 }),
+      strap: new THREE.MeshStandardMaterial({ color: 0xc92200, metalness: 0, roughness: .82, envMapIntensity: .32 }),
+      decal: new THREE.MeshStandardMaterial({ color: 0x8a1800, metalness: 0, roughness: .6, envMapIntensity: .3 }),
+      logo: new THREE.MeshStandardMaterial({ color: 0x141516, metalness: .2, roughness: .6 }),
+      dot: new THREE.MeshStandardMaterial({ color: 0xff5a1f, metalness: .1, roughness: .4 }),
+      screenring: new THREE.MeshStandardMaterial({ color: 0x050506, metalness: .3, roughness: .25 }),
+      screen: new THREE.MeshBasicMaterial({ map: faceTex, toneMapped: false }),
+      glass: new THREE.MeshPhysicalMaterial({ color: 0x000000, metalness: 0, roughness: .04, transparent: true, opacity: .16, depthWrite: false, envMapIntensity: 1.5 })
+    };
+
+    // rig > spin > tilt > model. The lean lives inside the spin, so the turn stays level: the watch
+    // rotates about a vertical axis just behind the case and never rises or sinks as it goes round.
+    var rig = new THREE.Group(), spin = new THREE.Group(), tilt = new THREE.Group(); rig.add(spin); spin.add(tilt); scene.add(rig);
+    tilt.rotation.set(-.3, 0, .08); rig.scale.setScalar(.001);
+    var state = { p: 0, pop: 0, mx: 0, my: 0 }, ready = false, visible = false;
+
+    function size(){
+      var w = wrap.clientWidth, h = wrap.clientHeight; if(!w || !h) return;
+      renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+    }
+    size(); window.addEventListener("resize", size);
+
+    function draw(t){
+      spin.rotation.y = (state.p - .5) * Math.PI * 1.7 - .35 + state.mx * .25;
+      rig.rotation.x = state.my * .12;
+      rig.scale.setScalar(Math.max(.001, state.pop));
+      renderer.render(scene, cam);
+    }
+    (function loop(now){
+      if(ready && visible && !doc.hidden) draw(now / 1000);
+      requestAnimationFrame(loop);
+    })(0);
+
+    gsap.to(state, { p: 1, ease: "none", scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 1.2 } });
+    ScrollTrigger.refresh();
+    if(fine){
+      var qx = gsap.quickTo(state, "mx", { duration: 1, ease: "power3" }), qy = gsap.quickTo(state, "my", { duration: 1, ease: "power3" });
+      window.addEventListener("pointermove", function(e){ qx(e.clientX / window.innerWidth - .5); qy(e.clientY / window.innerHeight - .5); }, { passive: true });
+      doc.addEventListener("pointerleave", function(){ qx(0); qy(0); });
+    }
+
+    // fetch the model only when the section is getting close
+    var asked = false, inView = false;
+    function pop(){ if(ready && inView && state.pop === 0) gsap.to(state, { pop: 1, duration: 1.2, ease: "back.out(1.35)" }); }
+    function load(){
+      if(asked) return; asked = true;
+      new THREE.GLTFLoader().load("models/cmf-watch-pro-2.glb", function(g){
+        var box = new THREE.Box3().setFromObject(g.scene), c = box.getCenter(new THREE.Vector3());
+        g.scene.position.set(-c.x, -c.y, -(box.max.z - 22));
+        g.scene.traverse(function(o){
+          if(!o.isMesh) return;
+          o.material = MATS[o.name.split("_")[0]] || metal;
+          if(o.name === "glass") o.renderOrder = 2;
+        });
+        tilt.add(g.scene); ready = true; pop();
+      }, undefined, drop);
+    }
+    if("IntersectionObserver" in window){
+      new IntersectionObserver(function(es){ if(es[0].isIntersecting) load(); }, { rootMargin: "900px 0px" }).observe(section);
+      new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }).observe(wrap);
+      new IntersectionObserver(function(es){ if(es[0].isIntersecting){ inView = true; pop(); } }, { threshold: .25 }).observe(wrap);
+    } else { visible = inView = true; load(); }
   }
 
   /* ================= WebGL: a road surface made of points ================= */
   function initGL(staticFrame){
-    var api = { state: { amp: 1, lift: 0 } };
+    var api = { state: { amp: 1, lift: 0, travel: 0 } };
     var canvas = $("#gl"), hero = $(".hero"), THREE = window.THREE;
     if(!canvas || !THREE || CALM) return api;
     var renderer;
@@ -1115,29 +1461,32 @@ html.motion .belt span{padding-right:0}
     var cam = new THREE.PerspectiveCamera(42, 1, .1, 60);
     var geo = new THREE.PlaneGeometry(22, 11, small ? 90 : 190, small ? 46 : 96);
     function cssColor(name){ return new THREE.Color(getComputedStyle(root).getPropertyValue(name).trim() || "#888"); }
-    var uni = { uTime: { value: 0 }, uAmp: { value: 1 }, uMouse: { value: new THREE.Vector2(99, 99) }, uPx: { value: 11 * dpr },
+    var uni = { uTime: { value: 0 }, uAmp: { value: 1 }, uTravel: { value: 0 }, uMouse: { value: new THREE.Vector2(99, 99) }, uPx: { value: 11 * dpr },
       uBase: { value: cssColor("--ink") }, uHot: { value: cssColor("--hl") } };
     var mat = new THREE.ShaderMaterial({ uniforms: uni, transparent: true, depthWrite: false,
       vertexShader: [
-        "uniform float uTime; uniform float uAmp; uniform vec2 uMouse; uniform float uPx; varying float vH;",
+        "uniform float uTime; uniform float uAmp; uniform float uTravel; uniform vec2 uMouse; uniform float uPx; varying float vH; varying float vLane;",
         "void main(){",
         "  vec3 p = position;",
-        "  float w = sin(p.x*.9 + uTime*.7)*.11 + sin(p.y*1.7 - uTime*.45)*.07 + sin((p.x+p.y)*2.3 + uTime*1.1)*.035;",
-        "  float px = mod(uTime*1.9, 26.0) - 13.0;",
-        "  float bump = exp(-pow((p.x-px)*1.5, 2.0)) * .62;",
+        "  float yy = p.y + uTravel;", // the road moves toward you: with time, and faster as you scroll
+        "  float w = sin(p.x*.9 + uTime*.7)*.11 + sin(yy*1.7)*.07 + sin((p.x+yy)*2.3 + uTime*1.1)*.035;",
+        "  float r = mod(yy, 13.0) - 6.5;",
+        "  float bump = exp(-pow(r*1.5, 2.0)) * .62;", // a speed breaker lying across the road
+        "  float f = fract(yy*.45);",
+        "  vLane = step(abs(p.x), .2) * smoothstep(.0, .08, f) * (1.0 - smoothstep(.42, .5, f));", // dashed centre line
         "  float d = distance(p.xy, uMouse);",
         "  float rip = exp(-d*d*.9) * (.42 + .22*sin(d*7.0 - uTime*5.0));",
         "  p.z += (w + bump) * uAmp + rip;",
         "  vH = p.z;",
         "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
-        "  gl_PointSize = uPx / -mv.z;",
+        "  gl_PointSize = uPx * (1.0 + vLane*.7) / -mv.z;",
         "  gl_Position = projectionMatrix * mv;",
         "}"].join("\n"),
       fragmentShader: [
-        "uniform vec3 uBase; uniform vec3 uHot; varying float vH;",
+        "uniform vec3 uBase; uniform vec3 uHot; varying float vH; varying float vLane;",
         "void main(){",
         "  vec2 c = gl_PointCoord - .5; if(dot(c,c) > .25) discard;",
-        "  float t = smoothstep(.16, .62, vH);",
+        "  float t = max(smoothstep(.16, .62, vH), vLane*.85);",
         "  gl_FragColor = vec4(mix(uBase, uHot, t), mix(.26, 1.0, t));",
         "}"].join("\n") });
     var pts = new THREE.Points(geo, mat);
@@ -1156,17 +1505,19 @@ html.motion .belt span{padding-right:0}
     var mq = window.matchMedia("(prefers-color-scheme: dark)");
     if(mq.addEventListener) mq.addEventListener("change", recolor);
 
-    var target = new THREE.Vector2(99, 99);
+    var target = new THREE.Vector2(99, 99), sway = new THREE.Vector2(0, 0), swayTo = new THREE.Vector2(0, 0);
     hero.addEventListener("pointermove", function(e){
       var r = hero.getBoundingClientRect();
+      swayTo.set((e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5);
       target.set(((e.clientX - r.left) / r.width - .5) * 16, (.5 - (e.clientY - r.top) / r.height) * 9 - 1.5);
     }, { passive: true });
-    hero.addEventListener("pointerleave", function(){ target.set(99, 99); });
+    hero.addEventListener("pointerleave", function(){ target.set(99, 99); swayTo.set(0, 0); });
 
     function draw(t){
-      uni.uTime.value = t; uni.uAmp.value = api.state.amp;
+      uni.uTime.value = t; uni.uAmp.value = api.state.amp; uni.uTravel.value = t * 1.2 + api.state.travel;
       if(target.x > 50 || uni.uMouse.value.x > 50) uni.uMouse.value.copy(target); else uni.uMouse.value.lerp(target, .09);
-      cam.position.set(0, 1.5 + api.state.lift * 1.4, 7.2); cam.lookAt(0, -.4 + api.state.lift * .5, 0);
+      sway.lerp(swayTo, .05);
+      cam.position.set(sway.x * 1.3, 1.5 + api.state.lift * 1.4 - sway.y * .45, 7.2); cam.lookAt(0, -.4 + api.state.lift * .5, 0);
       renderer.render(scene, cam);
     }
     if(staticFrame){ draw(2.2); return api; }
